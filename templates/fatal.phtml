@@ -20,10 +20,12 @@ along with Affiliates For All.  If not, see
 
 */ ?>
 
-<p>An error occurred when connecting to the database:</p>
+<div class="fatal-message alert alert-danger" role="alert">
+  <p class="fw-bold">An error occurred when connecting to the database:</p>
 
-<p><?php echo $v->message ?></p>
+  <p><?php echo $v->message ?></p>
 
-<p><?php echo $v->reason ?></p>
+  <p><?php echo $v->reason ?></p>
+</div>
 
 <hr/>

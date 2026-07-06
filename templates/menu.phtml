@@ -20,29 +20,29 @@ along with Affiliates For All.  If not, see
 
 */ ?>
 
-<div id="menu">
+<nav id="menu" class="nav justify-content-center flex-wrap gap-2">
   <?php if($this->admin) { ?>
-    <a href="admin-overview.php"><?php echo __('Site Overview') ?></a> |
-    <a href="admin-affiliates.php"><?php echo __('Affiliates') ?></a> |
-    <a href="admin-banners.php"><?php echo __('Banners') ?></a> |
-    <a href="admin-orders.php"><?php echo __('All Orders') ?></a> |
-    <a href="admin-payments.php"><?php echo __('All Payments') ?></a> |
-    <a href="overview.php"><?php echo __('Back') ?></a> |
+    <a class="nav-link" href="admin-overview.php"><?php echo __('Site Overview') ?></a>
+    <a class="nav-link" href="admin-affiliates.php"><?php echo __('Affiliates') ?></a>
+    <a class="nav-link" href="admin-banners.php"><?php echo __('Banners') ?></a>
+    <a class="nav-link" href="admin-orders.php"><?php echo __('All Orders') ?></a>
+    <a class="nav-link" href="admin-payments.php"><?php echo __('All Payments') ?></a>
+    <a class="nav-link" href="overview.php"><?php echo __('Back') ?></a>
   <?php } else { ?>
-    <a href="overview.php"><?php echo __('Overview') ?></a> |
-    <a href="account.php"><?php echo __('Your Account') ?></a> |
+    <a class="nav-link" href="overview.php"><?php echo __('Overview') ?></a>
+    <a class="nav-link" href="account.php"><?php echo __('Your Account') ?></a>
 
     <?php if($this->offer_banners) { ?>
-      <a href="banners.php"><?php echo __('Banners') ?></a> |
+      <a class="nav-link" href="banners.php"><?php echo __('Banners') ?></a>
     <?php } ?>
     
-    <a href="orders.php"><?php echo __('Your Orders') ?></a> |
-    <a href="payments.php"><?php echo __('Your Payments') ?></a> |
+    <a class="nav-link" href="orders.php"><?php echo __('Your Orders') ?></a>
+    <a class="nav-link" href="payments.php"><?php echo __('Your Payments') ?></a>
 
     <?php if($_SESSION['administrator']) { ?>
-      <a href="admin-overview.php"><?php echo __('Admin') ?></a> |
+      <a class="nav-link" href="admin-overview.php"><?php echo __('Admin') ?></a>
     <?php } ?>
   <?php } ?>
 
-  <a href="logout.php"><?php echo __('Log Out') ?></a>
-</div>
+  <a class="nav-link" href="logout.php"><?php echo __('Log Out') ?></a>
+</nav>

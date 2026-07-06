@@ -24,7 +24,7 @@ along with Affiliates For All.  If not, see
 
 <span id="start" style="display: none"><?php echo $v->start ?></span>
 
-<div id="tabs" class="wide">
+<div id="tabs" class="admin-panel banner-admin wide">
   <ul>
     <li><a href="#banners"><span><?php echo __('Current Banners') ?></span></a></li>
     <li><a href="#newbanner"><span><?php echo __('Add New Banner') ?></span></a></li>
@@ -41,47 +41,53 @@ along with Affiliates For All.  If not, see
 	</p>
 
     <form>
-      <table class="form">
-        <?php foreach($v->banners as $banner) { ?>
-          <tr>
-            <td class="largecell topsep" colspan="2">
-              <img id="banner_<?php echo $banner['id'] ?>"
-                src="servebanner.php?name=<?php echo $banner['name'] ?>"/>
-            </td>
-          </tr>
-          <tr>
-            <td><?php echo __('Banner Name:') ?></td>
-            <td>
-              <input id="name_<?php echo $banner['id'] ?>" type="text"
+      <?php foreach($v->banners as $banner) { ?>
+        <div class="banner-item border rounded bg-white p-3 mb-3">
+          <div class="text-center mb-3">
+            <img id="banner_<?php echo $banner['id'] ?>" class="img-fluid banner-preview"
+              src="servebanner.php?name=<?php echo $banner['name'] ?>"/>
+          </div>
+
+          <div class="mb-3 row">
+            <label class="col-sm-4 col-form-label" for="name_<?php echo $banner['id'] ?>">
+              <?php echo __('Banner Name:') ?>
+            </label>
+            <div class="col-sm-8">
+              <input id="name_<?php echo $banner['id'] ?>" class="form-control" type="text"
                 size="20" value="<?php echo $banner['name'] ?>"/>
-            </td>
-          </tr>
-          <tr>
-            <td><?php echo __('Links to') ?> <?php echo $v->store_home ?></td>
-            <td>
-              <input id="linktarget_<?php echo $banner['id'] ?>" type="text"
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label class="col-sm-4 col-form-label" for="linktarget_<?php echo $banner['id'] ?>">
+              <?php echo __('Links to') ?> <?php echo $v->store_home ?>
+            </label>
+            <div class="col-sm-8">
+              <input id="linktarget_<?php echo $banner['id'] ?>" class="form-control" type="text"
                 size="20" value="<?php echo $banner['link_target'] ?>"/>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <?php echo __('Banner will be shown to affiliates if this box is checked:') ?>
-            </td>
-            <td>
-              <input id="enabled_<?php echo $banner['id'] ?>" type="checkbox"
-                <?php echo $banner['enabled'] ? 'checked="1"' : '' ?>/>
-            </td>
-          </tr>
-          <tr>
-            <td class="submit bannersubmit bottomsep" colspan="2">
-              <input id="save_<?php echo $banner['id'] ?>" type="submit"
-                value="<?php echo __('Save Changes') ?>"/>
-              <input id="delete_<?php echo $banner['id'] ?>" type="submit"
-                value="<?php echo __('Delete Banner') ?>"/>
-            </td>
-          </tr>
-        <?php } ?>
-      </table>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <div class="col-sm-8 offset-sm-4">
+              <div class="form-check">
+                <input id="enabled_<?php echo $banner['id'] ?>" class="form-check-input" type="checkbox"
+                  <?php echo $banner['enabled'] ? 'checked="checked"' : '' ?>/>
+                <label class="form-check-label" for="enabled_<?php echo $banner['id'] ?>">
+                  <?php echo __('Banner will be shown to affiliates if this box is checked:') ?>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center bannersubmit">
+            <input id="save_<?php echo $banner['id'] ?>" class="btn btn-primary" type="submit"
+              value="<?php echo __('Save Changes') ?>"/>
+            <input id="delete_<?php echo $banner['id'] ?>" class="btn btn-secondary" type="submit"
+              value="<?php echo __('Delete Banner') ?>"/>
+          </div>
+        </div>
+      <?php } ?>
     </form>
   </div>
   <div id="newbanner">
@@ -99,36 +105,26 @@ along with Affiliates For All.  If not, see
 	?>
     </p>
   
-    <form method="post" enctype="multipart/form-data">
-      <table class="form">
-        <tr>
-          <td>Image File:</td>
-          <td>
-            <input type="file" name="file"
-              accept="image/gif,image/jpeg,image/png"
-              value="<?php echo $v->new_name ?>"/>
-            </td>
-        </tr>
-        <tr>
-          <td><?php echo __('Banner Name:') ?></td>
-          <td>
-            <input id="new_name" name="new_name" type="text" size="20"
-              value="<?php echo $v->new_name ?>"/>
-          </td>
-        </tr>
-        <tr>
-          <td><?php echo __('Links to') ?> <?php echo $v->store_home ?></td>
-          <td>
-            <input name="new_linktarget" type="text" size="20"
-              value="<?php echo $v->new_linktarget ?>"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="submit" colspan="2">
-            <input id="upload" type="submit" value="<?php echo __('Upload') ?>"/>
-          </td>
-        </tr>
-      </table>
+    <form method="post" enctype="multipart/form-data" class="banner-upload-form">
+      <div class="mb-3">
+        <label class="form-label" for="file">Image File:</label>
+        <input id="file" class="form-control" type="file" name="file"
+          accept="image/gif,image/jpeg,image/png"
+          value="<?php echo $v->new_name ?>"/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="new_name"><?php echo __('Banner Name:') ?></label>
+        <input id="new_name" class="form-control" name="new_name" type="text" size="20"
+          value="<?php echo $v->new_name ?>"/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="new_linktarget"><?php echo __('Links to') ?> <?php echo $v->store_home ?></label>
+        <input id="new_linktarget" class="form-control" name="new_linktarget" type="text" size="20"
+          value="<?php echo $v->new_linktarget ?>"/>
+      </div>
+      <div class="text-center">
+        <input id="upload" class="btn btn-primary" type="submit" value="<?php echo __('Upload') ?>"/>
+      </div>
     </form>
   </div>
 </div>

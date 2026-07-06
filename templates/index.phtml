@@ -19,68 +19,59 @@ along with Affiliates For All.  If not, see
 <http://www.gnu.org/licenses/>.
 
 */ ?>
-<div id="tabs" class="narrow">
-  <ul>
-    <li><a href="#logon"><span><?php echo __('Log On') ?></span></a></li>
-    <li><a href="#signup"><span><?php echo __('Sign Up') ?></span></a></li>
+<div id="tabs" class="login-panel narrow">
+  <ul class="nav nav-tabs" id="auth-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="logon-tab" type="button"
+        data-bs-toggle="tab" data-bs-target="#logon" role="tab"
+        aria-controls="logon" aria-selected="true"><?php echo __('Log On') ?></button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="signup-tab" type="button"
+        data-bs-toggle="tab" data-bs-target="#signup" role="tab"
+        aria-controls="signup" aria-selected="false"><?php echo __('Sign Up') ?></button>
+    </li>
   </ul>
-  <div id="logon">
-    <form method="post">
-      <table class="form">
-        <tr>
-          <td><?php echo __('Username:') ?></td>
-          <td><input id="username" type="text" name="username"/></td>
-        </tr>
-        <tr>
-          <td><?php echo __('Password:') ?></td>
-          <td><input id="password" type="password" name="password"/></td>
-        </tr>
-        <tr>
-          <td colspan="2" class="submit">
-            <input type="submit" value="<?php echo __('Log On') ?>"/>
-          </td>
-        </tr>
-      </table>
+  <div class="tab-content border border-top-0 p-4 bg-white">
+  <div id="logon" class="tab-pane fade show active" role="tabpanel"
+    aria-labelledby="logon-tab">
+    <form method="post" class="auth-form">
+      <div class="mb-3">
+        <label class="form-label" for="username"><?php echo __('Username:') ?></label>
+        <input id="username" class="form-control" type="text" name="username"/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="password"><?php echo __('Password:') ?></label>
+        <input id="password" class="form-control" type="password" name="password"/>
+      </div>
+      <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="<?php echo __('Log On') ?>"/>
+      </div>
     </form>
   </div>
-  <div id="signup">
-    <form method="post">
-      <table class="form">
-        <tr>
-          <td class="mergedown"><?php echo __('Choose a username:') ?></td>
-          <td class="mergedown">
-            <input id="chosenusername" type="text" name="username"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="mergeup">&nbsp;</td>
-          <td id="message" class="mergeup">&nbsp;</td>
-        </tr>
+  <div id="signup" class="tab-pane fade" role="tabpanel"
+    aria-labelledby="signup-tab">
+    <form method="post" class="auth-form">
+      <div class="mb-3">
+        <label class="form-label" for="chosenusername"><?php echo __('Choose a username:') ?></label>
+        <input id="chosenusername" class="form-control" type="text" name="username"/>
+        <div id="message" class="form-text">&nbsp;</div>
+      </div>
 
-        <tr>
-          <td><?php echo __('Choose a password:') ?></td>
-          <td>
-            <input id="chosenpassword" type="password" name="password"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="mergedown"><?php echo __('Confirm password:') ?></td>
-          <td class="mergedown">
-            <input id="confirmpassword" type="password" name="confirmpassword"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="mergeup">&nbsp;</td>
-          <td id="passmessage" class="mergeup">&nbsp;</td>
-        </tr>
+      <div class="mb-3">
+        <label class="form-label" for="chosenpassword"><?php echo __('Choose a password:') ?></label>
+        <input id="chosenpassword" class="form-control" type="password" name="password"/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="confirmpassword"><?php echo __('Confirm password:') ?></label>
+        <input id="confirmpassword" class="form-control" type="password" name="confirmpassword"/>
+        <div id="passmessage" class="form-text">&nbsp;</div>
+      </div>
 
-        <tr>
-          <td colspan="2" class="submit">
-            <input type="submit" value="<?php echo __('Sign Up') ?>"/>
-          </td>
-        </tr>
-      </table>
-      <p>
+      <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="<?php echo __('Sign Up') ?>"/>
+      </div>
+      <p class="auth-note">
       <?php 
 	  	echo __('Your username is used for logging on');
 		echo ', '; 
@@ -91,6 +82,7 @@ along with Affiliates For All.  If not, see
 	   ?>	
 		</p>
     </form>
+  </div>
   </div>
 </div>
 

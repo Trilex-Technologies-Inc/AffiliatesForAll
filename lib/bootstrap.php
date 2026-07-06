@@ -79,8 +79,13 @@ ini_set('include_path',
     '../templates' . PATH_SEPARATOR .
     ini_get('include_path'));
 
-set_magic_quotes_runtime(FALSE);
-if(ini_get('magic_quotes_gpc') || get_magic_quotes_runtime()
+if(function_exists('set_magic_quotes_runtime'))
+    @set_magic_quotes_runtime(FALSE);
+
+$magic_quotes_runtime = function_exists('get_magic_quotes_runtime') ?
+    @get_magic_quotes_runtime() : FALSE;
+
+if(ini_get('magic_quotes_gpc') || $magic_quotes_runtime
         || ini_get('magic_quotes_sybase')) {
 
     trigger_error('Affiliates for All requires the following PHP settings: '

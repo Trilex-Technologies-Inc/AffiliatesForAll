@@ -40,6 +40,138 @@ img {
     margin: 5em auto 1em;
 }
 
+#tabs.login-panel {
+    margin-top: 3em;
+}
+
+.login-panel .tab-content {
+    border-color: #dee2e6 !important;
+}
+
+.login-panel .auth-form {
+    margin: 0;
+}
+
+.login-panel .auth-note {
+    margin: 1.5em 0 0;
+}
+
+.account-panel .account-form,
+.account-panel .terms-box {
+    margin: 1em auto;
+    max-width: 34rem;
+}
+
+.account-panel .terms-box {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 1rem;
+}
+
+.account-panel .readonly-value {
+    padding-top: calc(.375rem + 1px);
+}
+
+.admin-panel .admin-details-form {
+    margin: 1em auto;
+    max-width: 38rem;
+}
+
+.admin-panel #navigation {
+    margin-top: 1em;
+}
+
+.admin-panel .admin-query-form {
+    margin: 1em auto;
+    max-width: 34rem;
+}
+
+.banner-admin .banner-item,
+.banner-admin .banner-upload-form {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 42rem;
+}
+
+.banner-admin .banner-preview {
+    max-height: 16rem;
+}
+
+.order-admin .detailsdate .hours,
+.order-admin .detailsdate .minutes,
+.order-admin .detailsdate .seconds {
+    max-width: 4.5rem;
+}
+
+.payment-admin .detailsdate .hours,
+.payment-admin .detailsdate .minutes,
+.payment-admin .detailsdate .seconds {
+    max-width: 4.5rem;
+}
+
+.overview-admin .summary-list {
+    margin: 1em auto;
+    max-width: 34rem;
+}
+
+.overview-admin .summary-row {
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: .75rem 0;
+}
+
+.overview-admin .summary-row dd {
+    margin: 0;
+}
+
+.overview-page .summary-list {
+    margin: 1em auto;
+    max-width: 46rem;
+}
+
+.overview-page .summary-row {
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: .75rem 0;
+}
+
+.overview-page .summary-row dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    text-align: right;
+}
+
+.banner-page .banner-link-form {
+    margin: 1em auto;
+    max-width: 42rem;
+}
+
+.banner-page .banner-preview {
+    max-height: 16rem;
+}
+
+.banner-page .banner-picker {
+    display: grid;
+    gap: 1rem;
+}
+
+.banner-page .banner-choice {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    padding: 1rem;
+}
+
+.fatal-message {
+    margin: 2rem auto;
+    max-width: 42rem;
+}
+
 .narrow {
     width: 30em;
 }
@@ -58,6 +190,10 @@ img {
 
 #menu {
     margin-bottom: 1em;
+}
+
+#menu .nav-link {
+    padding: .25rem .5rem;
 }
 
 #heading {

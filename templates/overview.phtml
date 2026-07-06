@@ -20,39 +20,39 @@ along with Affiliates For All.  If not, see
 
 */ ?>
 
-<div id="tabs" class="wide">
+<div id="tabs" class="overview-page wide">
   <ul>
     <li><a href="#summary"><span><?php echo __('Summary') ?></span></a></li>
     <li><a href="#commission"><span><?php echo __('Commission Graphs') ?></span></a></li>
     <li><a href="#orders"><span><?php echo __('Order Graphs') ?></span></a></li>
   </ul>
   <div id="summary">
-    <table class="form">
-      <tr>
-        <td><?php echo __('Total Orders:') ?></td>
-        <td><?php echo $v->currency.$v->total_orders ?></td>
-      </tr>
-      <tr>
-        <td><?php echo __('Total Commission:') ?></td>
-        <td><?php echo $v->currency.$v->total_commission ?></td>
-      </tr>
-      <tr>
-        <td><?php echo __('Commission Paid:') ?></td>
-        <td><?php echo $v->currency.$v->total_payments ?></td>
-      </tr>
-      <tr>
-        <td><?php echo __('Commission Payable:') ?></td>
-        <td><?php echo $v->currency.$v->total_payable ?></td>
-      </tr>
-      <tr>
-        <td><?php echo __('Your Affiliate Link:') ?></td>
-        <td><a href="<?php echo $v->link ?>"><?php echo $v->link ?></a></td>
-      </tr>
-      <tr>
-        <td><?php echo __('Affiliate Link with Campaign ID:') ?></td>
-        <td><a href="<?php echo $v->link2 ?>"><?php echo $v->link2 ?></a></td>
-      </tr>
-    </table>
+    <dl class="summary-list">
+      <div class="summary-row">
+        <dt><?php echo __('Total Orders:') ?></dt>
+        <dd><?php echo $v->currency.$v->total_orders ?></dd>
+      </div>
+      <div class="summary-row">
+        <dt><?php echo __('Total Commission:') ?></dt>
+        <dd><?php echo $v->currency.$v->total_commission ?></dd>
+      </div>
+      <div class="summary-row">
+        <dt><?php echo __('Commission Paid:') ?></dt>
+        <dd><?php echo $v->currency.$v->total_payments ?></dd>
+      </div>
+      <div class="summary-row">
+        <dt><?php echo __('Commission Payable:') ?></dt>
+        <dd><?php echo $v->currency.$v->total_payable ?></dd>
+      </div>
+      <div class="summary-row">
+        <dt><?php echo __('Your Affiliate Link:') ?></dt>
+        <dd><a href="<?php echo $v->link ?>"><?php echo $v->link ?></a></dd>
+      </div>
+      <div class="summary-row">
+        <dt><?php echo __('Affiliate Link with Campaign ID:') ?></dt>
+        <dd><a href="<?php echo $v->link2 ?>"><?php echo $v->link2 ?></a></dd>
+      </div>
+    </dl>
   </div>
   <div id="commission" class="graphs">
     <img id="com7" class="graph" src="loading.png"/>
