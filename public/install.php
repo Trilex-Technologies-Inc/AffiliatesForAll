@@ -28,8 +28,7 @@ function installer_terms($value) {
 }
 
 function installer_config($values) {
-    $db_dsn = 'mysql:dbname=' . $values['database_name'] .
-        ';host=' . $values['database_host'];
+    $db_dsn = installer_database_dsn($values);
 
     $lifetime = $values['lifetime_revenue_share'] ? 'TRUE' : 'FALSE';
     $terms = installer_terms($values['terms_of_business']);
@@ -66,9 +65,40 @@ function installer_config($values) {
         "AFA_TERMS;\n";
 }
 
+function installer_database_dsn($values) {
+    return 'mysql:dbname=' . $values['database_name'] .
+        ';host=' . $values['database_host'];
+}
+
+function installer_import_schema($values) {
+    $schema_file = dirname(__FILE__) . '/../affiliates.sql';
+
+    if(!file_exists($schema_file))
+        return 'Could not find affiliates.sql.';
+
+    $schema = file_get_contents($schema_file);
+    if($schema === false)
+        return 'Could not read affiliates.sql.';
+
+    try {
+        $pdo = new PDO(
+            installer_database_dsn($values),
+            $values['database_username'],
+            $values['database_password']
+        );
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->exec($schema);
+    } catch(PDOException $ex) {
+        return 'Could not import affiliates.sql: ' . $ex->getMessage();
+    }
+
+    return false;
+}
+
 $config_file = dirname(__FILE__) . '/../config.inc';
 $config_exists = file_exists($config_file);
 $success = false;
+$schema_imported = false;
 $errors = array();
 
 $defaults = array(
@@ -91,6 +121,7 @@ $defaults = array(
     'database_name' => 'affiliates',
     'database_username' => 'affiliates',
     'database_password' => '',
+    'import_schema' => true,
     'session_cookie_name' => 'AfASESSID',
     'timezone' => 'Europe/London',
     'terms_of_business' => '<p>Terms of business go here, with HTML markup.</p>'
@@ -98,7 +129,7 @@ $defaults = array(
 
 $values = $defaults;
 foreach($defaults as $key => $default) {
-    if($key == 'lifetime_revenue_share') {
+    if($key == 'lifetime_revenue_share' || $key == 'import_schema') {
         $values[$key] = installer_checked($key, $default);
     } else {
         $values[$key] = installer_value($key, $default);
@@ -140,8 +171,18 @@ if(installer_request_method() == 'POST') {
         if(file_put_contents($config_file, $config) === false) {
             $errors[] = 'Could not write config.inc. Check directory permissions.';
         } else {
-            $success = true;
             $config_exists = true;
+            if($values['import_schema']) {
+                $schema_error = installer_import_schema($values);
+                if($schema_error === false) {
+                    $schema_imported = true;
+                    $success = true;
+                } else {
+                    $errors[] = $schema_error;
+                }
+            } else {
+                $success = true;
+            }
         }
     }
 }
@@ -168,7 +209,7 @@ if(installer_request_method() == 'POST') {
 
         <?php if($success) { ?>
           <div class="alert alert-success">
-            <strong>Config created.</strong> If you have not already imported <code>affiliates.sql</code>, import it now, then open the app.
+            <strong>Install complete.</strong> Config created<?php echo $schema_imported ? ' and affiliates.sql imported' : '' ?>. You can open the app now.
           </div>
         <?php } ?>
 
@@ -230,6 +271,10 @@ if(installer_request_method() == 'POST') {
               <div class="col-md-3">
                 <label class="form-label" for="database_password">Password</label>
                 <input id="database_password" class="form-control" type="password" name="database_password" value="<?php echo htmlspecialchars($values['database_password']) ?>">
+              </div>
+              <div class="col-12 form-check">
+                <input id="import_schema" class="form-check-input" type="checkbox" name="import_schema" <?php echo $values['import_schema'] ? 'checked' : '' ?>>
+                <label class="form-check-label" for="import_schema">Import affiliates.sql after creating config.inc. This recreates the application tables.</label>
               </div>
             </div>
           </fieldset>

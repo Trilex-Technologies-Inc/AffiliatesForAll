@@ -30,13 +30,7 @@ On PHP 8.2 it will hit removed PHP functions such as `set_magic_quotes_runtime`,
    FLUSH PRIVILEGES;
    ```
 
-2. Import the database schema.
-
-   ```bash
-   mysql -u affiliates -p affiliates < affiliates.sql
-   ```
-
-3. Create the local config file with the browser installer.
+2. Create the local config file and import the schema with the browser installer.
 
    Open:
 
@@ -45,9 +39,14 @@ On PHP 8.2 it will hit removed PHP functions such as `set_magic_quotes_runtime`,
    ```
 
    The installer asks for the programme, database, affiliate, and system
-   settings, then writes `config.inc` in the project root.
+   settings, then writes `config.inc` in the project root. Leave
+   "Import affiliates.sql" checked to load the database schema during install.
 
-4. Or create `config.inc` manually.
+3. Or import the schema and create `config.inc` manually.
+
+   ```bash
+   mysql -u affiliates -p affiliates < affiliates.sql
+   ```
 
    ```bash
    cp config.inc.sample config.inc
@@ -65,7 +64,7 @@ On PHP 8.2 it will hit removed PHP functions such as `set_magic_quotes_runtime`,
    $database_password = 'change-this-password';
    ```
 
-5. Point your web server at this project directory.
+4. Point your web server at this project directory.
 
    The top-level `.htaccess` rewrites requests into `public/`, so the app opens
    at:
