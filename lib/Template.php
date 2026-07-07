@@ -97,7 +97,7 @@ class Template {
         echo '<div id="details_'.$details[0].'" ' .
             'class="detailsdate detailsfield">';
 
-        echo '<input class="date" type="text" size="12"> ';
+        echo '<input class="date" type="date"> ';
 
         if($time) {
             echo '<input class="hours" type="text" size="2">:';

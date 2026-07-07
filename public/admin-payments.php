@@ -27,7 +27,7 @@ class Payments extends Template {
     private function make_date_time_field($details) {
         echo '<div id="details_'.$details[0].'" ' .
             'class="detailsdate detailsfield input-group">';
-        echo '<input class="date form-control" type="text" size="12"> ';
+        echo '<input class="date form-control" type="date"> ';
         echo '<input class="hours form-control" type="text" size="2">';
         echo '<span class="input-group-text">:</span>';
         echo '<input class="minutes form-control" type="text" size="2">';
