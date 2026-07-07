@@ -59,7 +59,21 @@ function __($string) {
 }
 
 error_reporting(E_ALL | E_STRICT);
-require_once '../config.inc';
+
+$config_file = dirname(__FILE__) . '/../config.inc';
+if(!file_exists($config_file)) {
+    $script = isset($_SERVER['PHP_SELF']) ?
+        basename($_SERVER['PHP_SELF']) : '';
+
+    if($script != 'install.php') {
+        $dir = dirname($_SERVER['PHP_SELF']);
+        if($dir != '/') $dir .= '/';
+        header("Location: $dir" . "install.php");
+        exit();
+    }
+}
+
+require_once $config_file;
 require_once '../lib/gettext.php';
 require_once '../lib/streams.php';
 

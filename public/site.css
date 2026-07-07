@@ -518,6 +518,104 @@ img {
     padding: .85rem 1rem;
 }
 
+.installer-page {
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.installer-panel {
+    background: #fff;
+    border: 1px solid #dfe4ea;
+    box-shadow: 0 1.5rem 4rem rgba(29, 39, 51, .12);
+    margin: 0 auto;
+    max-width: 76rem;
+    padding: 2rem;
+}
+
+.installer-heading {
+    align-items: center;
+    border-bottom: 1px solid #e3e6f0;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+}
+
+.installer-heading h1 {
+    color: #14212d;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 .25rem;
+    text-align: left;
+}
+
+.installer-heading p {
+    color: #667381;
+    margin: 0;
+}
+
+.installer-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.installer-card {
+    background: #fff;
+    border: 1px solid #e3e6f0;
+    box-shadow: 0 .15rem 1rem rgba(58, 59, 69, .06);
+    padding: 1.25rem;
+}
+
+.installer-card legend {
+    color: #4e73df;
+    float: none;
+    font-size: .9rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    width: auto;
+}
+
+.installer-card .form-label,
+.installer-card .form-check-label {
+    color: #344255;
+    font-weight: 700;
+}
+
+.installer-card .form-control {
+    border-color: #d1d3e2;
+    color: #5a5c69;
+}
+
+.installer-card .form-control:focus {
+    border-color: #bac8f3;
+    box-shadow: 0 0 0 .2rem rgba(78, 115, 223, .16);
+}
+
+.installer-actions {
+    align-items: center;
+    background: #f8f9fc;
+    border: 1px solid #e3e6f0;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.installer-actions .btn-primary {
+    background: #4e73df;
+    border-color: #4e73df;
+    font-weight: 700;
+    min-height: 2.75rem;
+    min-width: 11rem;
+}
+
+.installer-actions .btn-primary:hover,
+.installer-actions .btn-primary:focus {
+    background: #2e59d9;
+    border-color: #2653d4;
+}
+
 .yes {
     color: #177245;
     font-weight: 700;
@@ -879,6 +977,24 @@ img {
 
     .auth-switch {
         margin-bottom: 1.5rem;
+    }
+
+    .installer-page {
+        padding: 1rem;
+    }
+
+    .installer-panel {
+        padding: 1.25rem;
+    }
+
+    .installer-heading,
+    .installer-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .installer-actions .btn {
+        width: 100%;
     }
 
     .narrow,

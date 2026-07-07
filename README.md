@@ -36,13 +36,22 @@ On PHP 8.2 it will hit removed PHP functions such as `set_magic_quotes_runtime`,
    mysql -u affiliates -p affiliates < affiliates.sql
    ```
 
-3. Create the local config file.
+3. Create the local config file with the browser installer.
+
+   Open:
+
+   ```text
+   http://your-domain-or-localhost/install.php
+   ```
+
+   The installer asks for the programme, database, affiliate, and system
+   settings, then writes `config.inc` in the project root.
+
+4. Or create `config.inc` manually.
 
    ```bash
    cp config.inc.sample config.inc
    ```
-
-4. Edit `config.inc`.
 
    At minimum, change these values:
 
