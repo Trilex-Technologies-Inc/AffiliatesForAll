@@ -254,26 +254,49 @@ img {
     max-width: none;
 }
 
+.dashboard-content .summary-list {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    margin: 0;
+}
+
 .dashboard-content .summary-row {
     background: #fff;
     border: 1px solid #e3e6f0;
-    border-left: .25rem solid #4e73df;
-    box-shadow: 0 .15rem .6rem rgba(58, 59, 69, .06);
-    margin-bottom: .75rem;
-    padding: 1rem;
+    border-radius: .35rem;
+    box-shadow: 0 .15rem 1.25rem rgba(58, 59, 69, .08);
+    display: block;
+    margin: 0;
+    min-height: 7rem;
+    padding: 1.25rem;
 }
 
 .dashboard-content .summary-row dt {
     color: #4e73df;
     font-size: .78rem;
     font-weight: 800;
+    margin: 0 0 .65rem;
     text-transform: uppercase;
 }
 
 .dashboard-content .summary-row dd {
     color: #5a5c69;
-    font-size: 1.05rem;
+    font-size: 1.4rem;
     font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    overflow-wrap: anywhere;
+    text-align: left;
+}
+
+.dashboard-content .overview-page .summary-row:nth-child(n+5) {
+    min-height: 0;
+}
+
+.dashboard-content .overview-page .summary-row:nth-child(n+5) dd {
+    font-size: .95rem;
+    font-weight: 600;
 }
 
 .dashboard-content .form-control,
@@ -559,17 +582,12 @@ img {
 }
 
 .overview-admin .summary-list {
-    margin: 1em auto;
-    max-width: 34rem;
+    margin: 0;
+    max-width: none;
 }
 
 .overview-admin .summary-row {
-    align-items: center;
-    border-bottom: 1px solid #dee2e6;
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    padding: .75rem 0;
+    border-bottom: 0;
 }
 
 .overview-admin .summary-row dd {
@@ -577,23 +595,18 @@ img {
 }
 
 .overview-page .summary-list {
-    margin: 1em auto;
-    max-width: 46rem;
+    margin: 0;
+    max-width: none;
 }
 
 .overview-page .summary-row {
-    align-items: center;
-    border-bottom: 1px solid #dee2e6;
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    padding: .75rem 0;
+    border-bottom: 0;
 }
 
 .overview-page .summary-row dd {
     margin: 0;
     overflow-wrap: anywhere;
-    text-align: right;
+    text-align: left;
 }
 
 .banner-page .banner-link-form {
