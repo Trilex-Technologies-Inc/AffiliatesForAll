@@ -8,6 +8,7 @@ function show(id, continuation) {
         continuation = function() { };
 
     $(id).show().dialog({
+        resizable: false,
         buttons: { "Close": function() {
                     $(id).dialog("close");
                     continuation();
@@ -334,6 +335,7 @@ Details.prototype.edit = function(order) {
 Details.prototype.deleteRecord = function(order) {
     var obj = this;
     $("#confirmdelete").show().dialog({
+        resizable: false,
         buttons: {
             "Yes": function() {
                 $("#confirmdelete").dialog("close");

@@ -859,8 +859,135 @@ td.largecell * {
 }
 
 .dialogue {
-    font-size: small;
     display: none;
+    font-size: .95rem;
+}
+
+.flora .ui-dialog,
+.flora.ui-dialog {
+    background: #fff !important;
+    border: 0 !important;
+    box-shadow: 0 1rem 3rem rgba(29, 39, 51, .24);
+    color: #5a5c69;
+    min-width: min(32rem, calc(100vw - 2rem));
+    overflow: hidden !important;
+    padding: 0 !important;
+}
+
+.flora .ui-dialog .ui-dialog-titlebar,
+.flora.ui-dialog .ui-dialog-titlebar {
+    background: #4e73df !important;
+    border: 0 !important;
+    height: auto;
+    min-height: 3rem;
+    padding: .85rem 3rem .85rem 1.25rem;
+    position: relative;
+}
+
+.flora .ui-dialog .ui-dialog-title,
+.flora.ui-dialog .ui-dialog-title {
+    color: #fff;
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    left: auto;
+    line-height: 1.2;
+    margin: 0;
+    position: static;
+    top: auto;
+}
+
+.flora .ui-dialog .ui-dialog-titlebar-close,
+.flora.ui-dialog .ui-dialog-titlebar-close {
+    background: transparent !important;
+    border: 0 !important;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0;
+    height: 2rem;
+    line-height: 2rem;
+    position: absolute;
+    right: .75rem;
+    text-align: center;
+    top: .5rem;
+    width: 2rem;
+}
+
+.flora .ui-dialog .ui-dialog-titlebar-close:before,
+.flora.ui-dialog .ui-dialog-titlebar-close:before {
+    content: "x";
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.flora .ui-dialog .ui-dialog-content,
+.flora.ui-dialog .ui-dialog-content {
+    background: #fff !important;
+    margin: 0;
+    min-height: 0 !important;
+    padding: 1.5rem 1.5rem 1rem;
+}
+
+.flora .ui-dialog .ui-dialog-buttonpane,
+.flora.ui-dialog .ui-dialog-buttonpane {
+    background: #fff !important;
+    border-top: 1px solid #e3e6f0;
+    bottom: auto;
+    padding: 1rem 1.5rem;
+    position: static;
+    right: auto;
+    text-align: right;
+    width: auto;
+}
+
+.flora .ui-dialog .ui-dialog-buttonpane button,
+.flora.ui-dialog .ui-dialog-buttonpane button {
+    background: #4e73df;
+    border: 1px solid #4e73df;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    margin: 0 0 0 .5rem;
+    min-width: 5rem;
+    padding: .45rem .85rem;
+}
+
+.flora .ui-dialog .ui-dialog-buttonpane button:hover,
+.flora.ui-dialog .ui-dialog-buttonpane button:hover,
+.flora .ui-dialog .ui-dialog-buttonpane button:focus,
+.flora.ui-dialog .ui-dialog-buttonpane button:focus {
+    background: #2e59d9;
+    border-color: #2653d4;
+}
+
+.flora .ui-dialog .ui-resizable-handle,
+.flora.ui-dialog .ui-resizable-handle {
+    background: none !important;
+    border: 0 !important;
+    display: none !important;
+}
+
+.flora .ui-dialog .ui-resizable-n,
+.flora .ui-dialog .ui-resizable-s,
+.flora .ui-dialog .ui-resizable-e,
+.flora .ui-dialog .ui-resizable-w,
+.flora .ui-dialog .ui-resizable-se,
+.flora .ui-dialog .ui-resizable-sw,
+.flora .ui-dialog .ui-resizable-nw,
+.flora .ui-dialog .ui-resizable-ne,
+.flora.ui-dialog .ui-resizable-n,
+.flora.ui-dialog .ui-resizable-s,
+.flora.ui-dialog .ui-resizable-e,
+.flora.ui-dialog .ui-resizable-w,
+.flora.ui-dialog .ui-resizable-se,
+.flora.ui-dialog .ui-resizable-sw,
+.flora.ui-dialog .ui-resizable-nw,
+.flora.ui-dialog .ui-resizable-ne {
+    background: none !important;
+    border: 0 !important;
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
 }
 
 #changebanner {
@@ -877,5 +1004,5 @@ td.largecell * {
    bottom of dialogue boxes: */
 
 .ui-dialog-buttonpane {
-    padding-bottom: 10px;
+    padding-bottom: 1rem;
 }
