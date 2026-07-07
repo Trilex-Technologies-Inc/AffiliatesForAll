@@ -21,7 +21,7 @@ along with Affiliates For All.  If not, see
 */
 
 class Template {
-    private $file, $show_menu, $variables, $admin;
+    private $file, $show_menu, $show_heading, $variables, $admin;
 
     public static function get_ajax_key() {
         // This key is quoted in AJAX requests to protect against CSRF attacks.
@@ -43,6 +43,7 @@ class Template {
 
         $this->file = $file;
         $this->show_menu = true;
+        $this->show_heading = true;
         $this->variables = array();
         $this->admin = isset($admin_required);
 
@@ -82,6 +83,10 @@ class Template {
 
     public function suppress_menu() {
         $this->show_menu = false;
+    }
+
+    public function suppress_heading() {
+        $this->show_heading = false;
     }
 
     public function set($key, $value) {

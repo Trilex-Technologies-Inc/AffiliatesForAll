@@ -20,7 +20,25 @@ along with Affiliates For All.  If not, see
 
 */ ?>
 
-    <footer id="powered" class="text-center small text-muted mt-4">
+    <?php if($this->show_heading) { ?>
+            </main>
+            <footer id="powered" class="text-center small text-muted">
+              <?php echo __('Powered by Affiliates for All') ?>
+              <a href="http://www.affiliatesforall.org/">
+          		  <?php echo __('open source affiliate software') ?>
+              </a>
+          
+              , 
+          
+              <?php echo __('copyright') ?>
+          
+              © 2008 Metathinking Ltd.
+            </footer>
+          </div>
+        </div>
+      </div>
+    <?php } else { ?>
+      <footer id="powered" class="text-center small text-muted mt-4">
         <?php echo __('Powered by Affiliates for All') ?>
         <a href="http://www.affiliatesforall.org/">
       		<?php echo __('open source affiliate software') ?>
@@ -31,6 +49,7 @@ along with Affiliates For All.  If not, see
         <?php echo __('copyright') ?>
     
         © 2008 Metathinking Ltd.
-    </footer>
+      </footer>
+    <?php } ?>
   </body>
 </html>

@@ -20,29 +20,43 @@ along with Affiliates For All.  If not, see
 
 */ ?>
 
-<nav id="menu" class="nav justify-content-center flex-wrap gap-2">
+<?php $current_page = basename($_SERVER['PHP_SELF']); ?>
+
+<nav id="menu" class="dashboard-sidebar">
+  <a class="sidebar-brand" href="<?php echo $this->admin ? 'admin-overview.php' : 'overview.php' ?>">
+    <span class="sidebar-brand-icon">A</span>
+    <span class="sidebar-brand-text"><?php echo __('Affiliates for All') ?></span>
+  </a>
+
+  <div class="sidebar-divider"></div>
+
   <?php if($this->admin) { ?>
-    <a class="nav-link" href="admin-overview.php"><?php echo __('Site Overview') ?></a>
-    <a class="nav-link" href="admin-affiliates.php"><?php echo __('Affiliates') ?></a>
-    <a class="nav-link" href="admin-banners.php"><?php echo __('Banners') ?></a>
-    <a class="nav-link" href="admin-orders.php"><?php echo __('All Orders') ?></a>
-    <a class="nav-link" href="admin-payments.php"><?php echo __('All Payments') ?></a>
+    <div class="sidebar-heading"><?php echo __('Admin') ?></div>
+    <a class="nav-link <?php echo $current_page == 'admin-overview.php' ? 'active' : '' ?>" href="admin-overview.php"><?php echo __('Site Overview') ?></a>
+    <a class="nav-link <?php echo $current_page == 'admin-affiliates.php' ? 'active' : '' ?>" href="admin-affiliates.php"><?php echo __('Affiliates') ?></a>
+    <a class="nav-link <?php echo $current_page == 'admin-banners.php' ? 'active' : '' ?>" href="admin-banners.php"><?php echo __('Banners') ?></a>
+    <a class="nav-link <?php echo $current_page == 'admin-orders.php' ? 'active' : '' ?>" href="admin-orders.php"><?php echo __('All Orders') ?></a>
+    <a class="nav-link <?php echo $current_page == 'admin-payments.php' ? 'active' : '' ?>" href="admin-payments.php"><?php echo __('All Payments') ?></a>
+    <div class="sidebar-divider"></div>
     <a class="nav-link" href="overview.php"><?php echo __('Back') ?></a>
   <?php } else { ?>
-    <a class="nav-link" href="overview.php"><?php echo __('Overview') ?></a>
-    <a class="nav-link" href="account.php"><?php echo __('Your Account') ?></a>
+    <div class="sidebar-heading"><?php echo __('Affiliate') ?></div>
+    <a class="nav-link <?php echo $current_page == 'overview.php' ? 'active' : '' ?>" href="overview.php"><?php echo __('Overview') ?></a>
+    <a class="nav-link <?php echo $current_page == 'account.php' ? 'active' : '' ?>" href="account.php"><?php echo __('Your Account') ?></a>
 
     <?php if($this->offer_banners) { ?>
-      <a class="nav-link" href="banners.php"><?php echo __('Banners') ?></a>
+      <a class="nav-link <?php echo $current_page == 'banners.php' ? 'active' : '' ?>" href="banners.php"><?php echo __('Banners') ?></a>
     <?php } ?>
     
-    <a class="nav-link" href="orders.php"><?php echo __('Your Orders') ?></a>
-    <a class="nav-link" href="payments.php"><?php echo __('Your Payments') ?></a>
+    <a class="nav-link <?php echo $current_page == 'orders.php' ? 'active' : '' ?>" href="orders.php"><?php echo __('Your Orders') ?></a>
+    <a class="nav-link <?php echo $current_page == 'payments.php' ? 'active' : '' ?>" href="payments.php"><?php echo __('Your Payments') ?></a>
 
     <?php if($_SESSION['administrator']) { ?>
+      <div class="sidebar-divider"></div>
       <a class="nav-link" href="admin-overview.php"><?php echo __('Admin') ?></a>
     <?php } ?>
   <?php } ?>
 
+  <div class="sidebar-divider"></div>
   <a class="nav-link" href="logout.php"><?php echo __('Log Out') ?></a>
 </nav>

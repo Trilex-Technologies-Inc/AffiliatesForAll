@@ -33,9 +33,15 @@ along with Affiliates For All.  If not, see
     <script type="text/javascript" src="<?php echo $this->file ?>.js"></script>
     <title><?php echo $v->title ?></title>
   </head>
-  <body class="flora">
+  <body class="flora <?php echo $this->show_heading ? 'dashboard-body' : 'auth-body' ?>">
     <span id="key" style="display: none"><?php echo $v->key ?></span>
-    <div id="heading">
-      <h1><?php echo $v->title ?></h1>
-      <?php if($this->show_menu) require('menu.phtml') ?>
-    </div>
+    <?php if($this->show_heading) { ?>
+      <div id="wrapper" class="dashboard-shell">
+        <?php if($this->show_menu) require('menu.phtml') ?>
+        <div id="content-wrapper" class="dashboard-main">
+          <div id="content">
+            <div id="heading" class="dashboard-topbar">
+              <h1><?php echo $v->title ?></h1>
+            </div>
+            <main class="dashboard-content">
+    <?php } ?>

@@ -19,70 +19,101 @@ along with Affiliates For All.  If not, see
 <http://www.gnu.org/licenses/>.
 
 */ ?>
-<div id="tabs" class="login-panel narrow">
-  <ul class="nav nav-tabs" id="auth-tabs" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="logon-tab" type="button"
-        data-bs-toggle="tab" data-bs-target="#logon" role="tab"
-        aria-controls="logon" aria-selected="true"><?php echo __('Log On') ?></button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="signup-tab" type="button"
-        data-bs-toggle="tab" data-bs-target="#signup" role="tab"
-        aria-controls="signup" aria-selected="false"><?php echo __('Sign Up') ?></button>
-    </li>
-  </ul>
-  <div class="tab-content border border-top-0 p-4 bg-white">
-  <div id="logon" class="tab-pane fade show active" role="tabpanel"
-    aria-labelledby="logon-tab">
-    <form method="post" class="auth-form">
-      <div class="mb-3">
-        <label class="form-label" for="username"><?php echo __('Username:') ?></label>
-        <input id="username" class="form-control" type="text" name="username"/>
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="password"><?php echo __('Password:') ?></label>
-        <input id="password" class="form-control" type="password" name="password"/>
-      </div>
-      <div class="text-center">
-        <input class="btn btn-primary" type="submit" value="<?php echo __('Log On') ?>"/>
-      </div>
-    </form>
-  </div>
-  <div id="signup" class="tab-pane fade" role="tabpanel"
-    aria-labelledby="signup-tab">
-    <form method="post" class="auth-form">
-      <div class="mb-3">
-        <label class="form-label" for="chosenusername"><?php echo __('Choose a username:') ?></label>
-        <input id="chosenusername" class="form-control" type="text" name="username"/>
-        <div id="message" class="form-text">&nbsp;</div>
-      </div>
+<div id="tabs" class="login-panel">
+  <div class="login-shell">
+    <section class="login-intro" aria-labelledby="login-brand">
+      <div class="brand-mark">A</div>
+      <h2 id="login-brand"><?php echo __('Affiliates for All') ?></h2>
+      <p><?php echo __('open source affiliate software') ?></p>
+      <dl class="login-highlights">
+        <div>
+          <dt><?php echo __('Orders') ?></dt>
+          <dd><?php echo __('Track affiliate sales from one clean dashboard.') ?></dd>
+        </div>
+        <div>
+          <dt><?php echo __('Banners') ?></dt>
+          <dd><?php echo __('Share campaign links and creative assets faster.') ?></dd>
+        </div>
+        <div>
+          <dt><?php echo __('Payments') ?></dt>
+          <dd><?php echo __('Keep commissions visible and easy to review.') ?></dd>
+        </div>
+      </dl>
+    </section>
 
-      <div class="mb-3">
-        <label class="form-label" for="chosenpassword"><?php echo __('Choose a password:') ?></label>
-        <input id="chosenpassword" class="form-control" type="password" name="password"/>
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="confirmpassword"><?php echo __('Confirm password:') ?></label>
-        <input id="confirmpassword" class="form-control" type="password" name="confirmpassword"/>
-        <div id="passmessage" class="form-text">&nbsp;</div>
-      </div>
+    <section class="login-card">
+      <ul class="nav nav-pills auth-switch" id="auth-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="logon-tab" type="button"
+            data-bs-toggle="tab" data-bs-target="#logon" role="tab"
+            aria-controls="logon" aria-selected="true"><?php echo __('Log On') ?></button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="signup-tab" type="button"
+            data-bs-toggle="tab" data-bs-target="#signup" role="tab"
+            aria-controls="signup" aria-selected="false"><?php echo __('Sign Up') ?></button>
+        </li>
+      </ul>
 
-      <div class="text-center">
-        <input class="btn btn-primary" type="submit" value="<?php echo __('Sign Up') ?>"/>
+      <div class="tab-content auth-content">
+        <div id="logon" class="tab-pane fade show active" role="tabpanel"
+          aria-labelledby="logon-tab">
+          <form method="post" class="auth-form">
+            <div class="auth-heading">
+              <h2><?php echo __('Log On') ?></h2>
+              <p><?php echo __('Welcome back. Manage your affiliate programme below.') ?></p>
+            </div>
+            <div class="auth-field">
+              <label class="form-label" for="username"><?php echo __('Username:') ?></label>
+              <input id="username" class="form-control" type="text" name="username"/>
+            </div>
+            <div class="auth-field">
+              <label class="form-label" for="password"><?php echo __('Password:') ?></label>
+              <input id="password" class="form-control" type="password" name="password"/>
+            </div>
+            <input class="btn btn-primary auth-submit" type="submit" value="<?php echo __('Log On') ?>"/>
+          </form>
+        </div>
+
+        <div id="signup" class="tab-pane fade" role="tabpanel"
+          aria-labelledby="signup-tab">
+          <form method="post" class="auth-form">
+            <div class="auth-heading">
+              <h2><?php echo __('Sign Up') ?></h2>
+              <p><?php echo __('Create an affiliate account and start sharing links.') ?></p>
+            </div>
+            <div class="auth-field">
+              <label class="form-label" for="chosenusername"><?php echo __('Choose a username:') ?></label>
+              <input id="chosenusername" class="form-control" type="text" name="username"/>
+              <div id="message" class="form-text">&nbsp;</div>
+            </div>
+
+            <div class="auth-field">
+              <label class="form-label" for="chosenpassword"><?php echo __('Choose a password:') ?></label>
+              <input id="chosenpassword" class="form-control" type="password" name="password"/>
+            </div>
+            <div class="auth-field">
+              <label class="form-label" for="confirmpassword"><?php echo __('Confirm password:') ?></label>
+              <input id="confirmpassword" class="form-control" type="password" name="confirmpassword"/>
+              <div id="passmessage" class="form-text">&nbsp;</div>
+            </div>
+
+            <input class="btn btn-primary auth-submit" type="submit" value="<?php echo __('Sign Up') ?>"/>
+            <p class="auth-note">
+            <?php 
+              echo __('Your username is used for logging on');
+              echo ', '; 
+              echo __('but it is not used in your affiliate links.');
+              echo ' ';
+              echo __('This means you can keep your username private');
+              echo ', '; 
+              echo __('if you want to.');
+             ?>	
+            </p>
+          </form>
+        </div>
       </div>
-      <p class="auth-note">
-      <?php 
-	  	echo __('Your username is used for logging on');
-		echo ', '; 
-		echo __('but it is not used in your affiliate links.');
-		echo __('This means you can keep your username private');
-		echo ', '; 
-		echo __('if you want to.');
-	   ?>	
-		</p>
-    </form>
-  </div>
+    </section>
   </div>
 </div>
 
