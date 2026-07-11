@@ -8,6 +8,7 @@ function show(id, continuation) {
         continuation = function() { };
 
     $(id).show().dialog({
+        resizable: false,
         buttons: { "Close": function() {
                     $(id).dialog("close");
                     continuation();
@@ -28,6 +29,28 @@ function pad(digits, string) {
 function formatDate(date) {
     return "" + date.getFullYear() + pad(2, date.getMonth() + 1) +
         pad(2, date.getDate());
+}
+
+function formatNativeDate(date) {
+    return "" + date.getFullYear() + "-" + pad(2, date.getMonth() + 1) +
+        "-" + pad(2, date.getDate());
+}
+
+function parseNativeDate(value) {
+    var components = (value || "").match(/(\d+)-(\d+)-(\d+)/);
+
+    if(components == null)
+        return new Date();
+
+    return new Date(components[1], components[2] - 1, components[3]);
+}
+
+function getNativeDate(selector) {
+    return parseNativeDate($(selector).val());
+}
+
+function setNativeDate(selector, date) {
+    $(selector).val(formatNativeDate(date));
 }
 
 function formatDateTime(date) {
@@ -56,15 +79,7 @@ function Pager(script, disableSearch) {
 
     $("#tabs > ul").tabs();
 
-    $("#from, #to").datepicker({
-        showOn: "button",
-        buttonImage: "images/calendar.gif",
-        buttonImageOnly: true,
-        dateFormat: "M d yy",
-        duration: ""
-    });
-
-    $("#from, #to").datepicker("setDate", new Date());
+    setNativeDate("#from, #to", new Date());
     $("#display").click(this.wrapper("display"));
     $("#download").click(this.wrapper("download"));
 
@@ -106,8 +121,8 @@ Pager.prototype.showPage = function(page) {
     };
 
     if(!this.disableSearch) {
-        restrictions.start = formatDate($("#from").datepicker("getDate"));
-        restrictions.end = formatDate($("#to").datepicker("getDate"));
+        restrictions.start = formatDate(getNativeDate("#from"));
+        restrictions.end = formatDate(getNativeDate("#to"));
     }
 
     getJSON(this.script, restrictions, function(json) {
@@ -142,8 +157,8 @@ Pager.prototype.display = function() {
 
 Pager.prototype.download = function() {
     var query = this.script + "?format=download";
-    query += "&start=" + formatDate($("#from").datepicker("getDate"));
-    query += "&end=" + formatDate($("#to").datepicker("getDate"));
+    query += "&start=" + formatDate(getNativeDate("#from"));
+    query += "&end=" + formatDate(getNativeDate("#to"));
 
     window.location.href = window.location.href.replace(/[^/]*$/, "") + query;
 
@@ -169,14 +184,6 @@ function Details(script, tab, validator) {
 
     $("#tabs > ul").tabs("disable", tab);
 
-    $(".detailsdate :first-child").datepicker({
-        showOn: "button",
-        buttonImage: "images/calendar.gif",
-        buttonImageOnly: true,
-        dateFormat: "M d yy",
-        duration: ""
-    });
-
     $("#details_save").click(function() {
         obj.save();
     });
@@ -200,7 +207,7 @@ Details.prototype.notifyOnChange = function(receiver) {
 }
 
 Details.prototype.getDateTime = function(node) {
-    var date = node.find(".date").datepicker("getDate");
+    var date = parseNativeDate(node.find(".date").val());
     date.setHours(node.find(".hours").val());
     date.setMinutes(node.find(".minutes").val());
     date.setSeconds(node.find(".seconds").val());
@@ -293,8 +300,7 @@ Details.prototype.initialiseFields = function(json) {
             .attr("selected", "selected");
 
         var date = value instanceof Date ? value : parseDate(value);
-        $(".detailsdate#" + this.id + " .date").datepicker(
-            "setDate", date);
+        $(".detailsdate#" + this.id + " .date").val(formatNativeDate(date));
         $(".detailsdate#" + this.id + " .hours").val(
             date.getHours());
         $(".detailsdate#" + this.id + " .minutes").val(
@@ -334,6 +340,7 @@ Details.prototype.edit = function(order) {
 Details.prototype.deleteRecord = function(order) {
     var obj = this;
     $("#confirmdelete").show().dialog({
+        resizable: false,
         buttons: {
             "Yes": function() {
                 $("#confirmdelete").dialog("close");

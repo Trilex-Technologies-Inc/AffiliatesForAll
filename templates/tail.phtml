@@ -1,6 +1,6 @@
 <?php /*
 
-Copyright (c) 2008 Metathinking Ltd.
+Copyright (c) 2026 Metathinking Ltd.
 
 This file is part of Affiliates For All.
 
@@ -20,17 +20,26 @@ along with Affiliates For All.  If not, see
 
 */ ?>
 
-    <div id="powered">
-    	<?php echo __('Powered by Affiliates for All') ?> 
-        <a href="http://www.affiliatesforall.org/">
-      		<?php echo __('open source affiliate software') ?>
-        </a>
-    
-        , 
-    
+    <?php if($this->show_heading) { ?>
+            </main>
+            <footer id="powered" class="text-center small text-muted">
+              <?php echo __('Powered by Affiliates for All') ?>
+              ,
+              <?php echo __('copyright') ?>
+          
+              © 2008 - <?php echo date('Y') ?> .
+            </footer>
+          </div>
+        </div>
+      </div>
+    <?php } else { ?>
+      <footer id="powered" class="text-center small text-muted mt-4">
+        <?php echo __('Powered by Affiliates for All') ?>
+        ,
         <?php echo __('copyright') ?>
     
-        © 2008 Metathinking Ltd.
-    </div>
+        © 2008 - <?php echo date('Y') ?> .
+      </footer>
+    <?php } ?>
   </body>
 </html>

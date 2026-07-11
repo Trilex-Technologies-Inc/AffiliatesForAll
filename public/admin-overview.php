@@ -31,17 +31,19 @@ $template->set('currency', $currency);
 
 $db = new Database();
 
-if(isset($_FILES['file'])) {
+if(isset($_FILES['file']) && $_FILES['file']['error'] == UPLOAD_ERR_OK
+        && is_uploaded_file($_FILES['file']['tmp_name'])) {
     $success = 0;
     $failure = 0;
     $payments = file($_FILES['file']['tmp_name']);
     foreach($payments as $payment) {
-        $fields = preg_split("/\t/", $payment);
-        $identifiers = preg_split('/_/', $fields[3]);
-        $id = $identifiers[1];
-        if($fields[1] && $id) {
+        $fields = preg_split("/\t/", rtrim($payment, "\r\n"));
+        $identifiers = isset($fields[3]) ? preg_split('/_/', $fields[3]) : array();
+        $amount = isset($fields[1]) ? $fields[1] : '';
+        $id = isset($identifiers[1]) ? $identifiers[1] : '';
+        if($amount && $id) {
             $db->insert('payments',
-                array('affiliate' => $id, 'amount' => $fields[1]));
+                array('affiliate' => $id, 'amount' => $amount));
             $success++;
         } else {
             $failure++;
@@ -52,6 +54,11 @@ if(isset($_FILES['file'])) {
         <div id="message" class="dialogue" title="Payment Upload">
           Upload completed.  '.$success.' payments created, '.$failure.'
           errors.
+        </div>');
+} elseif(isset($_FILES['file'])) {
+    $template->set('message', '
+        <div id="message" class="dialogue" title="Payment Upload">
+          Please choose a payments file to upload.
         </div>');
 } else {
     $template->set('message', '');

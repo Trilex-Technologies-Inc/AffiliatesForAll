@@ -22,7 +22,7 @@ along with Affiliates For All.  If not, see
 
 */ ?>
 
-<div id="tabs" class="medium">
+<div id="tabs" class="account-panel">
   <ul>
     <li><a href="#legal"><span><?php echo __('Terms of Business') ?></span></a></li>
     <li><a href="#general"><span><?php echo __('General') ?></span></a></li>
@@ -30,202 +30,190 @@ along with Affiliates For All.  If not, see
     <li><a href="#password"><span><?php echo __('Password') ?></span></a></li>
   </ul>
   <div id="legal">
-  	<p>
-    <?php 
-		if($v->wizard) {      
-      		echo __('Thank you for signing up.').' ';
-        	echo __('Below, you will find the terms and conditions for our affiliate programme.').' ';
-        	echo __('Please read through them, and indicate your agreement by clicking the button at the bottom.').' ';
-        	echo __('Once you have done that, we will need to get some contact details, and then your account will be fully active.').' ';
-      	} else { 
-      		echo __('For your reference, here are the terms and conditions for our affiliate programme:');
-    
-		} 
-	?>
-	</p>
-    <table class="form">
-      <tr>
-        <td><?php echo $v->terms ?></td>
-      </tr>
-      <tr>
-        <td class="submit">
-          <?php if($v->wizard) { ?>
-            <form>
-              <input id="agree" type="submit" value="<?php echo __('I Agree') ?>"/>
-            </form>
+    <div class="account-section">
+      <div class="account-section-header">
+        <h2><?php echo __('Terms of Business') ?></h2>
+        <p>
           <?php 
-		  	} else { 
-				echo __('Thank you for your agreement.');
+            if($v->wizard) {      
+              echo __('Thank you for signing up.').' ';
+              echo __('Please read through them, and indicate your agreement by clicking the button at the bottom.').' ';
+              echo __('Once you have done that, we will need to get some contact details, and then your account will be fully active.').' ';
+            } else { 
+              echo __('For your reference, here are the terms and conditions for our affiliate programme:');
             } 
-		  ?>
-        </td>
-      </tr>
-    </table>
+          ?>
+        </p>
+      </div>
+      <div class="terms-box">
+        <?php echo $v->terms ?>
+      </div>
+      <div class="account-actions">
+        <?php if($v->wizard) { ?>
+          <form>
+            <input id="agree" class="btn btn-primary" type="submit" value="<?php echo __('I Agree') ?>"/>
+          </form>
+        <?php 
+        } else { 
+          echo '<span class="account-status">'.__('Thank you for your agreement.').'</span>';
+        } 
+        ?>
+      </div>
+    </div>
   </div>
   <div id="general">
-    <form method="post">
-      <table class="form">
-        <tr>
-          <td><?php echo __('Affiliate ID:') ?></td>
-          <td><?php echo $v->user_id ?></td>
-        </tr>
-        <tr>
-          <td><?php echo __('Username:') ?></td>
-          <td><?php echo $v->user_local_username ?></td>
-        </tr>
-        <tr>
-          <td><?php echo __('Your Name:') ?></td>
-          <td>
-            <table>
-              <tr>
-                <td><?php echo __('Title:') ?></td>
-                <td class="spacer"><?php echo __('First Name:') ?></td>
-                <td><?php echo __('Last Name:') ?></td>
-              </tr>
-              <tr>
-                <td>
-                  <input id="title" name="title" type="text" size="4"
-                    value="<?php echo htmlspecialchars($v->user_title) ?>"> *
-                </td>
-                <td class="spacer">
-                  <input id="firstname" name="first_name" type="text" size="10"
-                    value="<?php echo htmlspecialchars($v->user_first_name) ?>">
-                  *
-                </td>
-                <td>
-                  <input id="lastname" name="last_name" type="text" size="10"
-                    value="<?php echo htmlspecialchars($v->user_last_name) ?>">
-                  *
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td><?php echo __('Your Email Address:') ?></td>
-          <td>
-            <input id="email" name="email" type="text"
-              value="<?php echo htmlspecialchars($v->user_email) ?>"> *
-            <br/>
-            <input id="email_update" name="email_update" type="checkbox"
-              	<?php echo $v->user_email_update ? 'checked="checked"' : '' ?>/>
-            	<?php echo __('Check this box to receive order updates by email.') ?>
-          </td>
-        </tr>
-        <tr>
-          <td><?php echo __('Your Address:') ?></td>
-          <td>
-            <input id="address1" name="address1" type="text"
-              value="<?php echo htmlspecialchars($v->user_address1) ?>"> *
-            <br/>
-            <input id="address2" name="address2" type="text"
-              value="<?php echo htmlspecialchars($v->user_address2) ?>"> *
-            <br/>
-            <input id="address3" name="address3" type="text"
-              value="<?php echo htmlspecialchars($v->user_address3) ?>">
-            <br/>
-            <input id="address4" name="address4" type="text"
-              value="<?php echo htmlspecialchars($v->user_address4) ?>">
-            <br/>
-          </td>
-        </tr>
-        <tr>
-          <td><?php echo __('Your Postcode:') ?></td>
-          <td>
-            <input id="postcode" name="postcode" type="text"
-              value="<?php echo htmlspecialchars($v->user_postcode) ?>"> *
-          </td>
-        </tr>
-        <tr>
-          <td><?php echo __('Your Country:') ?></td>
-          <td>
-            <select id="country" name="country">
-              <?php foreach($v->countries as $country) { ?>
-                <option value="<?php echo $country['id'] ?>"
-                    <?php if($v->user_country == $country['id'])
-                        echo('selected="selected"') ?> >
+    <form method="post" class="account-form">
+      <div class="account-section">
+        <div class="account-section-header">
+          <h2><?php echo __('General') ?></h2>
+          <p><?php echo __('Keep your contact details current so account and order updates reach the right place.') ?></p>
+        </div>
+        <div class="account-identity">
+          <div>
+            <span><?php echo __('Affiliate ID:') ?></span>
+            <strong><?php echo $v->user_id ?></strong>
+          </div>
+          <div>
+            <span><?php echo __('Username:') ?></span>
+            <strong><?php echo $v->user_local_username ?></strong>
+          </div>
+        </div>
+        <fieldset class="account-card">
+          <legend><?php echo __('Your Name:') ?></legend>
+          <div class="row g-3">
+            <div class="col-sm-3">
+              <label class="form-label" for="title"><?php echo __('Title:') ?> *</label>
+              <input id="title" class="form-control" name="title" type="text" size="4"
+                value="<?php echo htmlspecialchars($v->user_title) ?>"/>
+            </div>
+            <div class="col-sm-4">
+              <label class="form-label" for="firstname"><?php echo __('First Name:') ?> *</label>
+              <input id="firstname" class="form-control" name="first_name" type="text" size="10"
+                value="<?php echo htmlspecialchars($v->user_first_name) ?>"/>
+            </div>
+            <div class="col-sm-5">
+              <label class="form-label" for="lastname"><?php echo __('Last Name:') ?> *</label>
+              <input id="lastname" class="form-control" name="last_name" type="text" size="10"
+                value="<?php echo htmlspecialchars($v->user_last_name) ?>"/>
+            </div>
+          </div>
+        </fieldset>
+        <div class="account-card">
+          <div class="mb-3">
+            <label class="form-label" for="email"><?php echo __('Your Email Address:') ?> *</label>
+            <input id="email" class="form-control" name="email" type="text"
+              value="<?php echo htmlspecialchars($v->user_email) ?>"/>
+            <div class="form-check mt-2">
+              <input id="email_update" class="form-check-input" name="email_update" type="checkbox"
+                <?php echo $v->user_email_update ? 'checked="checked"' : '' ?>/>
+              <label class="form-check-label" for="email_update">
+                <?php echo __('Check this box to receive order updates by email.') ?>
+              </label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="address1"><?php echo __('Your Address:') ?> *</label>
+            <input id="address1" class="form-control mb-2" name="address1" type="text"
+              value="<?php echo htmlspecialchars($v->user_address1) ?>"/>
+            <input id="address2" class="form-control mb-2" name="address2" type="text"
+              value="<?php echo htmlspecialchars($v->user_address2) ?>"/>
+            <input id="address3" class="form-control mb-2" name="address3" type="text"
+              value="<?php echo htmlspecialchars($v->user_address3) ?>"/>
+            <input id="address4" class="form-control" name="address4" type="text"
+              value="<?php echo htmlspecialchars($v->user_address4) ?>"/>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="postcode"><?php echo __('Your Postcode:') ?> *</label>
+              <input id="postcode" class="form-control" name="postcode" type="text"
+                value="<?php echo htmlspecialchars($v->user_postcode) ?>"/>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="country"><?php echo __('Your Country:') ?> *</label>
+              <select id="country" class="form-select" name="country">
+                <?php foreach($v->countries as $country) { ?>
+                  <option value="<?php echo $country['id'] ?>"
+                      <?php if($v->user_country == $country['id'])
+                          echo('selected="selected"') ?> >
 
-                  <?php echo $country['name'] ?>
-                </option>
-              <?php } ?>
-            </select> *
-          </td>
-        </tr>
-        <tr>
-          <td><?php echo __('Your Phone Number:') ?></td>
-          <td>
-            <input id="phone" name="phone" type="text"
-              value="<?php echo htmlspecialchars($v->user_phone) ?>"> *
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="submit">
-            <input type="submit" value="<?php echo __('Save Details') ?>"/>
-          </td>
-        </tr>
-      </table>
+                    <?php echo $country['name'] ?>
+                  </option>
+                <?php } ?>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="phone"><?php echo __('Your Phone Number:') ?> *</label>
+              <input id="phone" class="form-control" name="phone" type="text"
+                value="<?php echo htmlspecialchars($v->user_phone) ?>"/>
+            </div>
+          </div>
+        </div>
+        <div class="account-actions">
+          <span><?php echo __('Fields marked') ?> * <?php echo __('are required.') ?></span>
+          <input class="btn btn-primary" type="submit" value="<?php echo __('Save Details') ?>"/>
+        </div>
+      </div>
     </form>
-
-    <p><?php echo __('Fields marked') ?> ‘ * ’ <?php echo __('are required.') ?></p>
   </div>
   <div id="password">
-    <form method="post">
-      <table class="form">
-        <tr>
-          <td><?php echo __('New Password:') ?></td>
-          <td><input id="chosenpassword" type="password" name="password"/></td>
-        </tr>
-        <tr>
-          <td class="mergedown"><?php echo __('Confirm New Password:') ?></td>
-          <td class="mergedown">
-            <input id="confirmpassword" type="password" name="confirmpassword"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="mergeup">&nbsp;</td>
-          <td id="passmessage" class="mergeup">&nbsp;</td>
-        </tr>
-        <tr>
-          <td colspan="2" class="submit">
-            <input type="submit" value="<?php echo __('Change Password') ?>"/>
-          </td>
-        </tr>
-      </table>
+    <form method="post" class="account-form">
+      <div class="account-section account-narrow-section">
+        <div class="account-section-header">
+          <h2><?php echo __('Password') ?></h2>
+          <p><?php echo __('Choose a new password and confirm it before saving.') ?></p>
+        </div>
+        <div class="account-card">
+          <div class="mb-3">
+            <label class="form-label" for="chosenpassword"><?php echo __('New Password:') ?></label>
+            <input id="chosenpassword" class="form-control" type="password" name="password"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="confirmpassword"><?php echo __('Confirm New Password:') ?></label>
+            <input id="confirmpassword" class="form-control" type="password" name="confirmpassword"/>
+            <div id="passmessage" class="form-text">&nbsp;</div>
+          </div>
+          <div class="account-actions">
+            <input class="btn btn-primary" type="submit" value="<?php echo __('Change Password') ?>"/>
+          </div>
+        </div>
+      </div>
     </form>
   </div>
   <div id="paypal">
-    <form method="post">
-      <table class="form">
-        <tr>
-          <td><?php echo __('PayPal ID:') ?></td>
-          <td>
-            <input id="paypalid" type="text"
-                value="<?php echo htmlspecialchars($v->user_paypal) ?>">
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="submit">
-            <input type="submit" value="Set PayPal ID"/>
-          </td>
-        </tr>
-      </table>
+    <form method="post" class="account-form">
+      <div class="account-section account-narrow-section">
+        <div class="account-section-header">
+          <h2><?php echo __('PayPal') ?></h2>
+          <p>
+            <?php 
+              echo __('Your PayPal ID will be an email address.').' ';
+              echo __('Enter the whole of that email address in the box above').' ';
+              echo __('for example').' ';
+              echo 'paypal@example.com.';
+            ?>	
+          </p>
+        </div>
+        <div class="account-card">
+          <div class="mb-3">
+            <label class="form-label" for="paypalid"><?php echo __('PayPal ID:') ?></label>
+            <input id="paypalid" class="form-control" type="text"
+              value="<?php echo htmlspecialchars($v->user_paypal) ?>"/>
+          </div>
+          <p class="account-help">
+            <?php 
+              echo __('If you dont put anything in the box');
+              echo ', ';
+              echo __('you will not be paid');
+              echo ', ';
+              echo __('but your earnings will be carried forward until you claim them.');
+            ?>
+          </p>
+          <div class="account-actions">
+            <input class="btn btn-primary" type="submit" value="Set PayPal ID"/>
+          </div>
+        </div>
+      </div>
     </form>
-
-    <p>
-    	<?php 
-			echo __('Your PayPal ID will be an email address.').' ';
-			echo __('Enter the whole of that email address in the box above').' ';
-			echo ',';
-			echo __('for example').' ';
-			echo 'paypal@example.com. ';  
-			echo __('If you dont put anything in the box');
-			echo ',';
-			echo __('you will not be paid');
-			echo ',';
-			echo __('but your earnings will be carried forward until you claim them.');
-		?>	
-			
-			</p>
   </div>
 </div>
 

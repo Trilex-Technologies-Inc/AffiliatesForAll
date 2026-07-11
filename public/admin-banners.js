@@ -33,6 +33,7 @@ function save(id) {
 
 function deleteBanner(id) {
     $("#confirmdelete").show().dialog({
+        resizable: false,
         buttons: {
             "Yes": function() {
                 $("#confirmdelete").dialog("close");

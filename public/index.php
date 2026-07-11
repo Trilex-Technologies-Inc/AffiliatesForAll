@@ -25,6 +25,7 @@ require_once '../lib/bootstrap.php';
 
 $template = new Template('index');
 $template->suppress_menu();
+$template->suppress_heading();
 
 $welcome = __('Welcome');
 $template->set('title', "$affiliate_programme_name: $welcome");

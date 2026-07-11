@@ -21,7 +21,7 @@ along with Affiliates For All.  If not, see
 */
 
 class Template {
-    private $file, $show_menu, $variables, $admin;
+    private $file, $show_menu, $show_heading, $variables, $admin;
 
     public static function get_ajax_key() {
         // This key is quoted in AJAX requests to protect against CSRF attacks.
@@ -43,6 +43,7 @@ class Template {
 
         $this->file = $file;
         $this->show_menu = true;
+        $this->show_heading = true;
         $this->variables = array();
         $this->admin = isset($admin_required);
 
@@ -84,6 +85,10 @@ class Template {
         $this->show_menu = false;
     }
 
+    public function suppress_heading() {
+        $this->show_heading = false;
+    }
+
     public function set($key, $value) {
         $this->variables[$key] = $value;
     }
@@ -92,7 +97,7 @@ class Template {
         echo '<div id="details_'.$details[0].'" ' .
             'class="detailsdate detailsfield">';
 
-        echo '<input class="date" type="text" size="12"> ';
+        echo '<input class="date" type="date"> ';
 
         if($time) {
             echo '<input class="hours" type="text" size="2">:';

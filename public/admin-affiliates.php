@@ -27,14 +27,25 @@ class Affiliates extends Template {
     private function make_country_selector($details) {
         $db = new Database();
         $rows = $db->get_rows('countries', 'name');
-        echo '<select id="details_'.$details[0].'" class="detailsfield">';
+        echo '<select id="details_'.$details[0].'" ' .
+            'class="detailsfield form-select">';
         foreach($rows as $row) {
             echo '<option value="'.$row[0].'">'.$row[1].'</option>';
         }
         echo '</select>';
+    }
 
-        if($details[3])
-            echo ' *';
+    private function make_checkbox_field($details) {
+        echo '<div class="form-check">';
+        echo '<input id="details_'.$details[0].'" ' .
+            'class="detailsfield form-check-input" type="checkbox">';
+        echo '</div>';
+    }
+
+    private function make_text_field($details) {
+        echo '<input id="details_'.$details[0].'" ' .
+            'class="detailsfield form-control" type="text" ' .
+            'size="'.$details[2].'">';
     }
 
     protected function make_data_field($details) {
@@ -43,9 +54,9 @@ class Affiliates extends Template {
         } else if($details[0] == 'wizard_complete'
                 || $details[0] == 'administrator'
                 || $details[0] == 'default_commission') {
-            $this->make_checkbox_selector($details);
+            $this->make_checkbox_field($details);
         } else {
-            parent::make_data_field($details);
+            $this->make_text_field($details);
         }
     }
 }

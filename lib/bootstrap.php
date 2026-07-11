@@ -59,7 +59,21 @@ function __($string) {
 }
 
 error_reporting(E_ALL | E_STRICT);
-require_once '../config.inc';
+
+$config_file = dirname(__FILE__) . '/../config.inc';
+if(!file_exists($config_file)) {
+    $script = isset($_SERVER['PHP_SELF']) ?
+        basename($_SERVER['PHP_SELF']) : '';
+
+    if($script != 'install.php') {
+        $dir = dirname($_SERVER['PHP_SELF']);
+        if($dir != '/') $dir .= '/';
+        header("Location: $dir" . "install.php");
+        exit();
+    }
+}
+
+require_once $config_file;
 require_once '../lib/gettext.php';
 require_once '../lib/streams.php';
 
@@ -79,8 +93,13 @@ ini_set('include_path',
     '../templates' . PATH_SEPARATOR .
     ini_get('include_path'));
 
-set_magic_quotes_runtime(FALSE);
-if(ini_get('magic_quotes_gpc') || get_magic_quotes_runtime()
+if(function_exists('set_magic_quotes_runtime'))
+    @set_magic_quotes_runtime(FALSE);
+
+$magic_quotes_runtime = function_exists('get_magic_quotes_runtime') ?
+    @get_magic_quotes_runtime() : FALSE;
+
+if(ini_get('magic_quotes_gpc') || $magic_quotes_runtime
         || ini_get('magic_quotes_sybase')) {
 
     trigger_error('Affiliates for All requires the following PHP settings: '

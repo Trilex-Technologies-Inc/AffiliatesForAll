@@ -72,8 +72,21 @@ function signup() {
     return false;
 }
 
+function switchAuthTab() {
+    var target = $(this).attr("data-bs-target");
+
+    $("#auth-tabs .nav-link").removeClass("active")
+        .attr("aria-selected", "false");
+    $(this).addClass("active").attr("aria-selected", "true");
+
+    $(".login-panel .tab-pane").removeClass("show").removeClass("active");
+    $(target).addClass("show").addClass("active");
+
+    return false;
+}
+
 $(function() {
-    $("#tabs > ul").tabs();
+    $("#auth-tabs .nav-link").click(switchAuthTab);
     $("#chosenusername").change(userChange);
     $("#chosenusername").keyup(userChange);
     $("#chosenpassword").change(passChange);

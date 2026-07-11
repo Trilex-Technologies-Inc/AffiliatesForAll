@@ -23,13 +23,13 @@ along with Affiliates For All.  If not, see
 <span id="commission_percent" style="display: none"><?php echo $v->commission_percent ?></span>
 <span id="commission_fixed" style="display: none"><?php echo $v->commission_fixed ?></span>
 
-<div id="tabs" class="wide">
+<div id="tabs" class="admin-panel wide">
   <ul>
     <li><a href="#results"><span><?php echo __('Affiliates') ?></span></a></li>
     <li><a href="#details"><span><?php echo __('Affiliate Details') ?></span></a></li>
   </ul>
   <div id="results">
-    <table id="restable" class="form">
+    <table id="restable" class="table table-striped table-bordered table-hover align-middle">
     </table>
     <div id="navigation">
       Page <span id="currentpage">?</span> <?php echo __('of') ?> <span id="maxpages">?</span>. <?php echo __('Go to:') ?>
@@ -39,22 +39,22 @@ along with Affiliates For All.  If not, see
     </div>
   </div>
   <div id="details">
-    <table id="detailstable" class="form">
+    <div id="detailstable" class="admin-details-form">
       <?php foreach($v->fields->get_field_descriptions() as $details) { ?>
-        <tr>
-          <td><?php echo $details[1] ?></td>
-          <td>
+        <div class="mb-3 row">
+          <label class="col-sm-4 col-form-label" for="details_<?php echo $details[0] ?>">
+            <?php echo $details[1] ?><?php echo $details[3] ? ' *' : '' ?>
+          </label>
+          <div class="col-sm-8">
             <?php $this->make_data_field($details) ?>
-          </td>
-        </tr>
+          </div>
+        </div>
       <?php } ?>
-      <tr>
-        <td class="submit" colspan="2">
-          <input id="details_save" type="submit" value="<?php echo __('Save') ?>"/>
-          <input id="details_cancel" type="submit" value="<?php echo __('Cancel') ?>"/>
-        </td>
-      </tr>
-    </table>
+      <div class="text-center">
+        <input id="details_save" class="btn btn-primary" type="submit" value="<?php echo __('Save') ?>"/>
+        <input id="details_cancel" class="btn btn-secondary" type="submit" value="<?php echo __('Cancel') ?>"/>
+      </div>
+    </div>
     <p>
     <?php 
 		echo __('Fields marked');

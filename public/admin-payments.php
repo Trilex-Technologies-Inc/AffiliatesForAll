@@ -24,11 +24,29 @@ $admin_required = TRUE;
 require_once '../lib/bootstrap.php';
 
 class Payments extends Template {
+    private function make_date_time_field($details) {
+        echo '<div id="details_'.$details[0].'" ' .
+            'class="detailsdate detailsfield input-group">';
+        echo '<input class="date form-control" type="date"> ';
+        echo '<input class="hours form-control" type="text" size="2">';
+        echo '<span class="input-group-text">:</span>';
+        echo '<input class="minutes form-control" type="text" size="2">';
+        echo '<span class="input-group-text">:</span>';
+        echo '<input class="seconds form-control" type="text" size="2">';
+        echo '</div>';
+    }
+
+    private function make_text_field($details) {
+        echo '<input id="details_'.$details[0].'" ' .
+            'class="detailsfield form-control" type="text" ' .
+            'size="'.$details[2].'">';
+    }
+
     protected function make_data_field($details) {
         if($details[0] == 'date_entered') {
-            echo $this->make_date_selector($details, True);
+            echo $this->make_date_time_field($details);
         } else {
-            parent::make_data_field($details);
+            echo $this->make_text_field($details);
         }
     }
 }
