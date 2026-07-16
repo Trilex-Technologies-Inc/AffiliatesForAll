@@ -19,6 +19,13 @@ along with Affiliates For All.  If not, see
 <http://www.gnu.org/licenses/>.
 
 */ ?>
+<?php if($v->installer_present) { ?>
+  <div class="alert alert-warning" role="alert">
+    <strong><?php echo __('Security warning:') ?></strong>
+    <?php echo __('The installer is still present. Remove the installer folder after installation.') ?>
+  </div>
+<?php } ?>
+
 <div id="tabs" class="login-panel">
   <div class="login-shell">
     <section class="login-intro" aria-labelledby="login-brand">
