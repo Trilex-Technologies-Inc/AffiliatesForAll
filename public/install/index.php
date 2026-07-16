@@ -71,7 +71,7 @@ function installer_database_dsn($values) {
 }
 
 function installer_import_schema($values) {
-    $schema_file = dirname(__FILE__) . '/../affiliates.sql';
+    $schema_file = dirname(__FILE__) . '/affiliates.sql';
 
     if(!file_exists($schema_file))
         return 'Could not find affiliates.sql.';
@@ -104,7 +104,7 @@ function installer_import_schema($values) {
     return false;
 }
 
-$config_file = dirname(__FILE__) . '/../config.inc';
+$config_file = dirname(__FILE__) . '/../../config.inc';
 $config_exists = file_exists($config_file);
 $success = false;
 $schema_imported = false;
@@ -148,7 +148,7 @@ foreach($defaults as $key => $default) {
     }
 }
 
-if(installer_request_method() == 'POST') {
+if(installer_request_method() == 'POST' && !$config_exists) {
     $required = array(
         'affiliate_programme_name' => 'Programme name',
         'store_home' => 'Store home URL',
@@ -165,9 +165,6 @@ if(installer_request_method() == 'POST') {
         if(trim($values[$field]) == '')
             $errors[] = "$label is required.";
     }
-
-    if($config_exists && !isset($_POST['overwrite_config']))
-        $errors[] = 'config.inc already exists. Tick overwrite if you want to replace it.';
 
     if(!is_numeric($values['cookie_lifetime']) || (int) $values['cookie_lifetime'] <= 0)
         $errors[] = 'Cookie lifetime must be a positive number of days.';
@@ -219,7 +216,7 @@ if(installer_request_method() == 'POST') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="../site.css">
     <title>Affiliates for All Installer</title>
   </head>
   <body class="auth-body">
@@ -252,10 +249,11 @@ if(installer_request_method() == 'POST') {
 
         <?php if($config_exists && !$success) { ?>
           <div class="alert alert-warning">
-            <strong>config.inc already exists.</strong> This installer will not overwrite it unless you tick the overwrite option.
+            <strong>Installer locked.</strong> This application is already configured. Remove <code>config.inc</code> manually only if you intentionally want to run the installer again.
           </div>
         <?php } ?>
 
+        <?php if(!$config_exists) { ?>
         <form method="post" class="installer-form">
           <fieldset class="installer-card">
             <legend>Programme</legend>
@@ -393,15 +391,10 @@ if(installer_request_method() == 'POST') {
           </fieldset>
 
           <div class="installer-actions">
-            <?php if($config_exists) { ?>
-              <label class="form-check">
-                <input class="form-check-input" type="checkbox" name="overwrite_config">
-                <span class="form-check-label">Overwrite existing config.inc</span>
-              </label>
-            <?php } ?>
             <button class="btn btn-primary" type="submit">Create config.inc</button>
           </div>
         </form>
+        <?php } ?>
       </section>
     </main>
   </body>

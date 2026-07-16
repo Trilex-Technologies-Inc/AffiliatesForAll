@@ -35,7 +35,7 @@ On PHP 8.2 it will hit removed PHP functions such as `set_magic_quotes_runtime`,
    Open:
 
    ```text
-   http://your-domain-or-localhost/install.php
+   http://your-domain-or-localhost/install/
    ```
 
    The installer asks for the programme, database, administrator account,
@@ -44,10 +44,13 @@ On PHP 8.2 it will hit removed PHP functions such as `set_magic_quotes_runtime`,
    The administrator username and password entered in the installer replace
    the schema's default login.
 
+   After installation, remove the `public/install` folder. The login page
+   displays a security warning while the installer remains present.
+
 3. Or import the schema and create `config.inc` manually.
 
    ```bash
-   mysql -u affiliates -p affiliates < affiliates.sql
+   mysql -u affiliates -p affiliates < public/install/affiliates.sql
    ```
 
    ```bash
@@ -83,7 +86,7 @@ On PHP 8.2 it will hit removed PHP functions such as `set_magic_quotes_runtime`,
 
 ## First Login
 
-The initial admin account is created by `affiliates.sql`:
+The initial admin account is created by `public/install/affiliates.sql`:
 
 ```text
 Username: Admin
