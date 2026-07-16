@@ -38,9 +38,11 @@ On PHP 8.2 it will hit removed PHP functions such as `set_magic_quotes_runtime`,
    http://your-domain-or-localhost/install.php
    ```
 
-   The installer asks for the programme, database, affiliate, and system
-   settings, then writes `config.inc` in the project root. Leave
+   The installer asks for the programme, database, administrator account,
+   affiliate, and system settings, then writes `config.inc` in the project root. Leave
    "Import affiliates.sql" checked to load the database schema during install.
+   The administrator username and password entered in the installer replace
+   the schema's default login.
 
 3. Or import the schema and create `config.inc` manually.
 

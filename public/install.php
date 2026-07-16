@@ -88,6 +88,15 @@ function installer_import_schema($values) {
         );
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->exec($schema);
+
+        $statement = $pdo->prepare(
+            'UPDATE affiliates SET local_username = ?, local_password = ? ' .
+            'WHERE administrator = true'
+        );
+        $statement->execute(array(
+            $values['administrator_username'],
+            $values['administrator_password']
+        ));
     } catch(PDOException $ex) {
         return 'Could not import affiliates.sql: ' . $ex->getMessage();
     }
@@ -121,6 +130,9 @@ $defaults = array(
     'database_name' => 'affiliates',
     'database_username' => 'affiliates',
     'database_password' => '',
+    'administrator_username' => 'Admin',
+    'administrator_password' => '',
+    'administrator_password_confirm' => '',
     'import_schema' => true,
     'session_cookie_name' => 'AfASESSID',
     'timezone' => 'Europe/London',
@@ -165,6 +177,20 @@ if(installer_request_method() == 'POST') {
 
     if(!is_numeric($values['commission_fixed']))
         $errors[] = 'Fixed commission must be numeric.';
+
+    if($values['import_schema']) {
+        if(trim($values['administrator_username']) == '')
+            $errors[] = 'Administrator username is required when importing the schema.';
+
+        if(strlen($values['administrator_username']) > 20)
+            $errors[] = 'Administrator username must be 20 characters or fewer.';
+
+        if($values['administrator_password'] == '')
+            $errors[] = 'Administrator password is required when importing the schema.';
+
+        if($values['administrator_password'] !== $values['administrator_password_confirm'])
+            $errors[] = 'Administrator passwords do not match.';
+    }
 
     if(count($errors) == 0) {
         $config = installer_config($values);
@@ -275,6 +301,25 @@ if(installer_request_method() == 'POST') {
               <div class="col-12 form-check">
                 <input id="import_schema" class="form-check-input" type="checkbox" name="import_schema" <?php echo $values['import_schema'] ? 'checked' : '' ?>>
                 <label class="form-check-label" for="import_schema">Import affiliates.sql after creating config.inc. This recreates the application tables.</label>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="installer-card">
+            <legend>Administrator Account</legend>
+            <p class="text-muted">Choose the credentials used to sign in after the schema is imported.</p>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label" for="administrator_username">Username</label>
+                <input id="administrator_username" class="form-control" name="administrator_username" maxlength="20" autocomplete="username" value="<?php echo htmlspecialchars($values['administrator_username']) ?>">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="administrator_password">Password</label>
+                <input id="administrator_password" class="form-control" type="password" name="administrator_password" autocomplete="new-password">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="administrator_password_confirm">Confirm password</label>
+                <input id="administrator_password_confirm" class="form-control" type="password" name="administrator_password_confirm" autocomplete="new-password">
               </div>
             </div>
           </fieldset>
