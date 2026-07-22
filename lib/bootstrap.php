@@ -128,7 +128,7 @@ if(!isset($logon_not_required)) {
         $dir = dirname($_SERVER['PHP_SELF']);
         if($dir != '/') $dir .= '/';
         $protocol = $https ? 'https' : 'http';
-        header("Location: $protocol://${_SERVER['HTTP_HOST']}$dir$redirect");
+        header("Location: $protocol://{$_SERVER['HTTP_HOST']}$dir$redirect");
         exit();
     }
 }

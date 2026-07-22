@@ -27,5 +27,5 @@ Template::check_ajax_key();
 $pager = new Pager(
     'payments', 'amount, date_entered', 'Amount, Date Payment Sent');
 
-$pager->set_date_format('%b %d %Y');
+$pager->set_date_format('M d Y');
 echo $pager->json($_GET['page']);

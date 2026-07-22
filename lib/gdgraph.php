@@ -125,7 +125,7 @@ class GDGraph{
 	//		Black lines
 	//		Black font
 	//		1 pixel thick lines.
-	function GDGraph($w, $h, $t="", $bg_c_r=255, $bg_c_g=255, $bg_c_b=255, $l_c_r=0, $l_c_g=0, $l_c_b=0, $str_c_r=0, $str_c_g=0, $str_c_b=0, $l=true,$l_x=NULL,$l_y=NULL,$l_border=true,$trans_back=false, $l_thickness=1){
+	function __construct($w, $h, $t="", $bg_c_r=255, $bg_c_g=255, $bg_c_b=255, $l_c_r=0, $l_c_g=0, $l_c_b=0, $str_c_r=0, $str_c_g=0, $str_c_b=0, $l=true,$l_x=NULL,$l_y=NULL,$l_border=true,$trans_back=false, $l_thickness=1){
 		$this->width = $w+0;
 		$this->height = $h+0;
 		
@@ -391,8 +391,8 @@ class GDGraph{
 		$line_count = 0;
 		while($current_y_pos <= $y_axis_bottom){
 			$font_left_space = strlen($current_y_value."")*5;
-			imagestring($this->image, 1, $y_division_left-$font_left_space, $current_y_pos-4, $current_y_value."", $this->font_color);
-			imageline($this->image, $y_division_left, $current_y_pos, $y_division_right, $current_y_pos, $this->line_color);
+			imagestring($this->image, 1, (int) round($y_division_left-$font_left_space), (int) round($current_y_pos-4), $current_y_value."", $this->font_color);
+			imageline($this->image, $y_division_left, (int) round($current_y_pos), $y_division_right, (int) round($current_y_pos), $this->line_color);
 			if($g_per)
 				imageline($this->image, $y_division_right, $current_y_pos, $this->right_border, $current_y_pos, IMG_COLOR_STYLED);
 			if (!$all_down)
@@ -425,8 +425,8 @@ class GDGraph{
 
 		//Painting the small the extra parts in the above and lower parts
 		//of the Y axis
-		imageline($this->image, $y_axis_x, $y_axis_top-($y_division_mid/8), $y_axis_x, $y_axis_top, $this->line_color);
-		imageline($this->image, $y_axis_x, $y_axis_bottom, $y_axis_x, $y_axis_bottom+($y_division_mid/8), $this->line_color);
+		imageline($this->image, $y_axis_x, (int) round($y_axis_top-($y_division_mid/8)), $y_axis_x, $y_axis_top, $this->line_color);
+		imageline($this->image, $y_axis_x, $y_axis_bottom, $y_axis_x, (int) round($y_axis_bottom+($y_division_mid/8)), $this->line_color);
 
 		//Getting the y position of the x axis
 		if (!($x_axis_y)){
@@ -453,7 +453,10 @@ class GDGraph{
 		$x_division_width = ($x_axis_right - $x_axis_left)/($specs['length']-1);
 		foreach($data as $prod => $sub_data){
 			$currentline_color = imagecolorallocate($this->image, ($color[$prod][0]+0), ($color[$prod][1]+0), ($color[$prod][2]+0));
-			$currentline_thickness = (is_array($l_t[$prod])) ? (($l_t[$prod][0]+0)==0) ? 1 : $l_t[$prod] : (($l_t[$prod]+0)==0) ? 1 : $l_t[$prod];
+			$line_thickness = $l_t[$prod] ?? 1;
+			$currentline_thickness = is_array($line_thickness)
+				? (((($line_thickness[0] ?? 0) + 0) == 0) ? 1 : $line_thickness[0])
+				: ((($line_thickness + 0) == 0) ? 1 : $line_thickness);
 			$current_x_pos = $x_axis_left;
 			$past_x = -1;
 			$past_y = -1;
@@ -465,30 +468,31 @@ class GDGraph{
 				else
 					$currentpoint_rel_height = ($value-$x_axis_y_value) * $conversion_factor;
 				
-				$currentpoint_real_height = $x_axis_y - $currentpoint_rel_height;
+				$currentpoint_real_height = (int) round($x_axis_y - $currentpoint_rel_height);
+				$draw_x = (int) round($current_x_pos);
 				if($inc_dot)
-					imagefilledrectangle($this->image, $current_x_pos-2, $currentpoint_real_height-2, $current_x_pos+2, $currentpoint_real_height+2, $currentline_color);
+					imagefilledrectangle($this->image, $draw_x-2, $currentpoint_real_height-2, $draw_x+2, $currentpoint_real_height+2, $currentline_color);
 				if ($past_x != -1){
 					//Activating the currentline thickness
 					imagesetthickness($this->image, $currentline_thickness);
-					imageline($this->image, $past_x, $past_y, $current_x_pos, $currentpoint_real_height, $currentline_color);
+					imageline($this->image, $past_x, $past_y, $draw_x, $currentpoint_real_height, $currentline_color);
 				}
 				if(strcmp($specs['ref_length'],$prod)==0){
 					//Reseting thickness of surrounding lines
 					imagesetthickness($this->image, $this->line_thickness);
-					imageline($this->image, $current_x_pos, $x_axis_y+5, $current_x_pos, $x_axis_y-5, $this->line_color);
+					imageline($this->image, $draw_x, $x_axis_y+5, $draw_x, $x_axis_y-5, $this->line_color);
 					if($g_per){
 						imagesetstyle($this->image, $grid_style);
-						imageline($this->image, $current_x_pos, $x_axis_y-5, $current_x_pos, $this->top_border, IMG_COLOR_STYLED);
-						imageline($this->image, $current_x_pos, $x_axis_y+5, $current_x_pos, $this->bottom_border, IMG_COLOR_STYLED);
+						imageline($this->image, $draw_x, $x_axis_y-5, $draw_x, $this->top_border, IMG_COLOR_STYLED);
+						imageline($this->image, $draw_x, $x_axis_y+5, $draw_x, $this->bottom_border, IMG_COLOR_STYLED);
 					}
 					
 					//Printing X axis label
 					$label = array_pop($x_label);
 					$font_left_space = strlen($label."")*5/2;
-					imagestring($this->image, 1, $current_x_pos-$font_left_space, $x_axis_y+1, $label."", $this->font_color);
+					imagestring($this->image, 1, (int) round($draw_x-$font_left_space), $x_axis_y+1, $label."", $this->font_color);
 				}
-				$past_x = $current_x_pos;
+				$past_x = $draw_x;
 				$past_y = $currentpoint_real_height;
 				$current_x_pos += $x_division_width;
 			}
@@ -699,8 +703,8 @@ class GDGraph{
 		$line_count = 0;
 		while($current_y_pos <= $y_axis_bottom){
 			$font_left_space = strlen($current_y_value."")*5;
-			imagestring($this->image, 1, $y_division_left-$font_left_space, $current_y_pos-4, $current_y_value."", $this->font_color);
-			imageline($this->image, $y_division_left, $current_y_pos, $y_division_right, $current_y_pos, $this->line_color);
+			imagestring($this->image, 1, (int) round($y_division_left-$font_left_space), (int) round($current_y_pos-4), $current_y_value."", $this->font_color);
+			imageline($this->image, $y_division_left, (int) round($current_y_pos), $y_division_right, (int) round($current_y_pos), $this->line_color);
 			if($g_per) {
                 imagesetstyle($this->image, $style);
 				imageline($this->image, $y_division_right, $current_y_pos, $this->right_border, $current_y_pos, IMG_COLOR_STYLED);
@@ -739,8 +743,8 @@ class GDGraph{
 
 		//Painting the small the extra parts in the above and lower parts
 		//of the Y axis
-		imageline($this->image, $y_axis_x, $y_axis_top-($y_division_mid/8), $y_axis_x, $y_axis_top, $this->line_color);
-		imageline($this->image, $y_axis_x, $y_axis_bottom, $y_axis_x, $y_axis_bottom+($y_division_mid/8), $this->line_color);
+		imageline($this->image, $y_axis_x, (int) round($y_axis_top-($y_division_mid/8)), $y_axis_x, $y_axis_top, $this->line_color);
+		imageline($this->image, $y_axis_x, $y_axis_bottom, $y_axis_x, (int) round($y_axis_bottom+($y_division_mid/8)), $this->line_color);
 
 		//Obtaining the y position of the x axis
 		if (!($x_axis_y)){
@@ -759,12 +763,12 @@ class GDGraph{
 		imageline($this->image, $x_axis_left, $x_axis_y, $x_axis_right, $x_axis_y, $this->line_color);
 
 		//Painting each bar
-		$bar_width = ($x_axis_right - $x_axis_left)/count($data);
-		$bar_side_space = $bar_width*((100-abs($wi_p))/200);
+		$bar_width = (int) round(($x_axis_right - $x_axis_left)/count($data));
+		$bar_side_space = (int) round($bar_width*((100-abs($wi_p))/200));
 		$current_x_pos = $x_axis_right - $bar_width;
 		$data_rev = array_reverse($data);
 		foreach($data_rev as $prod => $sub_data){
-			$currentbar_rel_height = $sub_data[0] * $conversion_factor;
+			$currentbar_rel_height = (int) round($sub_data[0] * $conversion_factor);
 			$currentbar_color = imagecolorallocate($this->image, ($sub_data[1]+0), ($sub_data[2]+0), ($sub_data[3]+0));
 			$currentbar_3dcolor = imagecolorallocate($this->image, ($sub_data[1]-50 < 0) ? 0 : $sub_data[1]-50, ($sub_data[2]-50 < 0) ? 0 : $sub_data[2]-50, ($sub_data[3]-50 < 0) ? 0 : $sub_data[3]-50);
 			$currentbar_3dwidth = (array_key_exists(4,$sub_data)) ? $sub_data[4]+0 : 0;
@@ -780,13 +784,13 @@ class GDGraph{
 							$current_x_pos+$bar_width-$bar_side_space,$x_axis_y,
 							$current_x_pos+$bar_width-$bar_side_space+$i,$x_axis_y+$i,
 							$current_x_pos+$bar_side_space+$i,$x_axis_y+$i
-					),4,$this->line_color);
+					),$this->line_color);
 					imagepolygon($this->image,Array(
 							$current_x_pos+$bar_side_space, $x_axis_y,
 							$current_x_pos+$bar_side_space+$i,$x_axis_y+$i,
 							$current_x_pos+$bar_side_space+$i,$currentbar_varedge+$i,
 							$current_x_pos+$bar_side_space,$currentbar_varedge
-					),4,$this->line_color);
+					),$this->line_color);
 					imagerectangle($this->image, $current_x_pos+$bar_side_space+$i, $x_axis_y+$i, $current_x_pos+$bar_width-$bar_side_space+$i, $currentbar_varedge+$i, $this->line_color);
 				}
 			}else{
@@ -800,13 +804,13 @@ class GDGraph{
 							$current_x_pos+$bar_width-$bar_side_space, $currentbar_varedge,
 							$current_x_pos+$bar_width-$bar_side_space+$i, $currentbar_varedge+$i,
 							$current_x_pos+$bar_side_space+$i, $currentbar_varedge+$i
-					),4,$this->line_color);
+					),$this->line_color);
 					imagepolygon($this->image,Array(
 							$current_x_pos+$bar_side_space, $x_axis_y,
 							$current_x_pos+$bar_side_space+$i,$x_axis_y+$i,
 							$current_x_pos+$bar_side_space+$i,$currentbar_varedge+$i,
 							$current_x_pos+$bar_side_space,$currentbar_varedge
-					),4,$this->line_color);
+					),$this->line_color);
 					imagerectangle($this->image, $current_x_pos+$bar_side_space+$i, $x_axis_y+$i, $current_x_pos+$bar_width-$bar_side_space+$i, $currentbar_varedge+$i, $this->line_color);
 				}
 			}
@@ -856,10 +860,10 @@ class GDGraph{
 	//		1 pixel line thickness
 	function pie_graph($data, $p_o=90, $put_pieces=true, $degree_start=0, $put_l=true, $threed_thickness=Array()){
 		//Get center of pie
-		$pie_center_x = ($this->right_border + $this->left_border)/2;
-		$pie_center_y = ($this->top_border + $this->bottom_border)/2;
-		$pie_width = ($this->right_border - $this->left_border)*$p_o/100;
-		$pie_height = ($this->bottom_border - $this->top_border)*$p_o/100;
+		$pie_center_x = (int) round(($this->right_border + $this->left_border)/2);
+		$pie_center_y = (int) round(($this->top_border + $this->bottom_border)/2);
+		$pie_width = (int) round(($this->right_border - $this->left_border)*$p_o/100);
+		$pie_height = (int) round(($this->bottom_border - $this->top_border)*$p_o/100);
 
 		//Draw lines, fill with color and label each pie slice
 		$specs = $this->_get_specs($data,"pie");
@@ -874,6 +878,7 @@ class GDGraph{
 			$total_degree_width = 0;
 			$curr_ele = 1;
 			foreach($data as $prod => $subarray){
+				$slice_thickness = $threed_thickness[$prod] ?? 0;
 				//Getting degree width of slice
 				if ($curr_ele == $data_total_elements){
 					$degree_width = 360 - $total_degree_width;
@@ -891,32 +896,32 @@ class GDGraph{
 
 				$curr_ele++;
 								
-				if ($i == $threed_thickness[$prod]+0){		
+				if ($i == $slice_thickness+0){
 					//Obtaining the color of this slice
 					$curr_color = imagecolorallocate($this->image,$subarray[1]+0,$subarray[2]+0,$subarray[3]+0);
 
 					//Drawing slice with its color
-					imagefilledarc($this->image, $pie_center_x, $pie_center_y-$threed_thickness[$prod], $pie_width, $pie_height, $degree_start+$total_degree_width, $degree_start+$total_degree_width+$degree_width, $curr_color,IMG_ARC_PIE);
+					imagefilledarc($this->image, $pie_center_x, $pie_center_y-$slice_thickness, $pie_width, $pie_height, $degree_start+$total_degree_width, $degree_start+$total_degree_width+$degree_width, $curr_color,IMG_ARC_PIE);
 		
 					//Drawing top outline and side outline
 					if($put_l){
-						imagefilledarc($this->image, $pie_center_x, $pie_center_y-$threed_thickness[$prod], $pie_width, $pie_height, $degree_start+$total_degree_width, $degree_start+$total_degree_width+$degree_width, $this->line_color,IMG_ARC_NOFILL | IMG_ARC_EDGED);
+						imagefilledarc($this->image, $pie_center_x, $pie_center_y-$slice_thickness, $pie_width, $pie_height, $degree_start+$total_degree_width, $degree_start+$total_degree_width+$degree_width, $this->line_color,IMG_ARC_NOFILL | IMG_ARC_EDGED);
 						if ((floor(($degree_start+$total_degree_width)/180)%2) == 0){
 							$ver_line_pos = $this->_ellipse_pos($degree_start+$total_degree_width, $pie_height, $pie_width, "");
-							imageline($this->image, $pie_center_x+$ver_line_pos['x'], $pie_center_y+$ver_line_pos['y'], $pie_center_x+$ver_line_pos['x'], $pie_center_y+$ver_line_pos['y']-$threed_thickness[$prod], $this->line_color);
+							imageline($this->image, (int) round($pie_center_x+$ver_line_pos['x']), (int) round($pie_center_y+$ver_line_pos['y']), (int) round($pie_center_x+$ver_line_pos['x']), (int) round($pie_center_y+$ver_line_pos['y']-$slice_thickness), $this->line_color);
 						}
 						
 						if ((floor(($degree_start+$total_degree_width+$degree_width)/180)%2) == 0){
 							$ver_line_pos = $this->_ellipse_pos($degree_start+$total_degree_width+$degree_width, $pie_height, $pie_width, "");
-							imageline($this->image, $pie_center_x+$ver_line_pos['x'], $pie_center_y+$ver_line_pos['y'], $pie_center_x+$ver_line_pos['x'], $pie_center_y+$ver_line_pos['y']-$threed_thickness[$prod], $this->line_color);
+							imageline($this->image, (int) round($pie_center_x+$ver_line_pos['x']), (int) round($pie_center_y+$ver_line_pos['y']), (int) round($pie_center_x+$ver_line_pos['x']), (int) round($pie_center_y+$ver_line_pos['y']-$slice_thickness), $this->line_color);
 						}
 					}
 					//Printing label
 					if($put_pieces){
 						$label_pos = $this->_ellipse_pos($degree_start+$total_degree_width+($degree_width/2), $pie_height, $pie_width, $prod."");
-						imagestring($this->image, 2, $pie_center_x+$label_pos['x'], $pie_center_y+$label_pos['y']-$threed_thickness[$prod], $prod."", $this->font_color);
+						imagestring($this->image, 2, (int) round($pie_center_x+$label_pos['x']), (int) round($pie_center_y+$label_pos['y']-$slice_thickness), $prod."", $this->font_color);
 					}
-				}else if ($i < $threed_thickness[$prod]+0){
+				}else if ($i < $slice_thickness+0){
 					//Obtaining the color of the 3D side of this slice
 					$curr_3dcolor = imagecolorallocate($this->image, ($subarray[1]-50 < 0) ? 0 : $subarray[1]-50, ($subarray[2]-50 < 0) ? 0 : $subarray[2]-50, ($subarray[3]-50 < 0) ? 0 : $subarray[3]-50);
 
