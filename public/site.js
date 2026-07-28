@@ -62,7 +62,8 @@ function formatDateTime(date) {
 }
 
 function parseDate(date) {
-    var components = date.match(/(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)/);
+    var components = String(date || "").match(
+        /(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)/);
 
     if(components == null)
         return new Date();
@@ -284,29 +285,23 @@ Details.prototype.resultsListChanged = function() {
 Details.prototype.initialiseFields = function(json) {
     $(".detailsfield").each(function() {
         var value = json[this.id.replace(/^details_/, "")];
-        if(!value)
+        if(value == null)
             value = "";
 
-        $("input#" + this.id + "[type=text]").val(value);
-
-        if(value == 1) {
-            $("input#" + this.id + "[type=checkbox]")
-                .attr("checked", "checked");
-        } else {
-            $("input#" + this.id + "[type=checkbox]").removeAttr("checked");
+        if(this.tagName.toLowerCase() == "input") {
+            if(this.type == "checkbox")
+                this.checked = value == 1;
+            else
+                $(this).val(value);
+        } else if(this.tagName.toLowerCase() == "select") {
+            $(this).val(value);
+        } else if($(this).is(".detailsdate")) {
+            var date = value instanceof Date ? value : parseDate(value);
+            $(this).find(".date").val(formatNativeDate(date));
+            $(this).find(".hours").val(date.getHours());
+            $(this).find(".minutes").val(date.getMinutes());
+            $(this).find(".seconds").val(date.getSeconds());
         }
-
-        $("select#" + this.id + " option[value=" + value + "]")
-            .attr("selected", "selected");
-
-        var date = value instanceof Date ? value : parseDate(value);
-        $(".detailsdate#" + this.id + " .date").val(formatNativeDate(date));
-        $(".detailsdate#" + this.id + " .hours").val(
-            date.getHours());
-        $(".detailsdate#" + this.id + " .minutes").val(
-            date.getMinutes());
-        $(".detailsdate#" + this.id + " .seconds").val(
-            date.getSeconds());
     });
 }
 
