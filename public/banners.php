@@ -41,7 +41,7 @@ $dir = dirname($_SERVER['PHP_SELF']);
 if($dir != '/') $dir .= '/';
 $protocol = $https ? 'https' : 'http';
 $template->set('banner_script',
-    "$protocol://${_SERVER['HTTP_HOST']}${dir}servebanner.php?name=");
+    "$protocol://{$_SERVER['HTTP_HOST']}{$dir}servebanner.php?name=");
 
 $template->set('refparam',
     $affiliate_referrer_parameter.'='.$_SESSION['affiliate_id']);

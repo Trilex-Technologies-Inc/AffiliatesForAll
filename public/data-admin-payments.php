@@ -46,6 +46,6 @@ foreach($rows as $row) {
     if(strlen($id) > 15)
         $id = substr($id, 0, 15);
     if($amount > 0)
-        echo "${row[1]}\t$amount\t$currency_code\taff_${row[0]}_$id\t" .
+        echo "{$row[1]}\t$amount\t$currency_code\taff_{$row[0]}_$id\t" .
             "Your affiliate commission to $date.  Thank you.\n";
 }

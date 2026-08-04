@@ -21,7 +21,8 @@ along with Affiliates For All.  If not, see
 */
 
 class Template {
-    private $file, $show_menu, $show_heading, $variables, $admin;
+    private $file, $show_menu, $show_heading, $variables, $admin,
+        $offer_banners;
 
     public static function get_ajax_key() {
         // This key is quoted in AJAX requests to protect against CSRF attacks.

@@ -29,5 +29,10 @@ $template->suppress_heading();
 
 $welcome = __('Welcome');
 $template->set('title', "$affiliate_programme_name: $welcome");
+$template->set(
+    'installer_present',
+    is_dir(dirname(__FILE__) . '/install') ||
+    is_dir(dirname(__FILE__) . '/../install')
+);
 
 $template->render();

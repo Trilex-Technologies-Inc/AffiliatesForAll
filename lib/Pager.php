@@ -41,7 +41,7 @@ class Pager {
 
         $this->column_heads = preg_split('/\s*,\s*/', $column_heads);
         $this->db = new Database();
-        $this->date_format = '%b %d %Y %H:%M:%S';
+        $this->date_format = 'M d Y H:i:s';
         $this->affiliate_restriction = 'affiliate = :affiliate and ';
         $this->date_restriction = 'date_entered > :start and ' .
             'date_entered < :end + interval 1 day and ';
@@ -168,18 +168,18 @@ class Pager {
             foreach($this->fields as $field) {
                 if($field == 'date_entered') {
                     $date = strtotime($row[$field]);
-                    $date = strftime($this->date_format, $date);
+                    $date = date($this->date_format, $date);
                     $html .= "  <td>$date</td>";
                 } else {
-                    $html .= "<td>${row[$field]}</td>";
+                    $html .= '<td>' . $row[$field] . '</td>';
                 }
             }
 
             if($this->editable) {
                 $html .= '<td>';
-                $html .= "<img id='edit_${row[0]}' class='edit' " .
+                $html .= "<img id='edit_{$row[0]}' class='edit' " .
                     "src='images/edit.png'/>";
-                $html .= "<img id='delete_${row[0]}' class='delete' " .
+                $html .= "<img id='delete_{$row[0]}' class='delete' " .
                     "src='images/remove.png'/>";
                 $html .= '</td>';
             }

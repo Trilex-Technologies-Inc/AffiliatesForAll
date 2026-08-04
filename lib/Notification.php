@@ -80,7 +80,7 @@ class Notification extends Trigger {
 		    if(isset($fields['date_entered'])) {
 			$new_value = Database::format_date_time($new_value);
 		    } else {
-			$new_value = strftime('%Y-%m-%d %H:%M:%S');
+			$new_value = date('Y-m-d H:i:s');
 		    }
 		} else if($order_fields[$i] == 'total' ||
 			$order_fields[$i] == 'commission') {
@@ -147,7 +147,7 @@ class Notification extends Trigger {
         $dir = dirname($_SERVER['PHP_SELF']);
         if($dir != '/') $dir .= '/';
         $protocol = $https ? 'https' : 'http';
-        $url = "$protocol://${_SERVER['HTTP_HOST']}$dir";
+        $url = "$protocol://{$_SERVER['HTTP_HOST']}$dir";
 
         Notification::$insert = <<<end
 Your affiliate account has been credited with a new order.  The details are as
